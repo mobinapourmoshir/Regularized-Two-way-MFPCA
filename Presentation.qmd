@@ -1362,3 +1362,30 @@ $$
 \bibliography{ref}
 }
 ```
+
+## Acknowledgments 
+```{=latex}
+\only<1>{\parbox{\textwidth}{This thesis would not have been possible without the support, guidance, and encouragement of many people.}}%
+
+\only<2>{\parbox{\textwidth}{\textbf{Dr.\ Mehdi Maadooliat: }\\ First and foremost, I am deeply thankful to my advisor, Dr. Mehdi Maadooliat. His mentorship has shaped not only this work but also my outlook as a researcher. From the start of my graduate studies, he has been a constant source of patience, thoughtful feedback, and encouragement. His dedication and belief in my potential have been invaluable in my growth as a student.}}%
+
+\only<3>{\parbox{\textwidth}{\textbf{Dr.\ Hossein Haghbin}\\ I would also like to acknowledge Dr. Hossein Haghbin, whose early guidance played an important role in directing my research interests. His insights and encouragement helped me approach functional data analysis with clarity and confidence.}}%
+
+\only<4>{\parbox{\textwidth}{\textbf{Committee Members:}\\ My sincere appreciation extends to my committee members, Dr. Rebecca Sanders and Dr. Hossein Haghbin, for generously offering their time and expertise. Their feedback and perspectives have strengthened this thesis and enriched my learning.}}%
+
+\only<5>{\parbox{\textwidth}{\textbf{Department and peers:}\\ I appreciate the Department of Mathematical and Statistical Sciences at Marquette University for a supportive, collaborative environment, and I thank my friends and labmates for their companionship, encouragement, and good humor.}}%
+
+\only<6>{\parbox{\textwidth}{\textbf{My dear family:}\\ Most importantly, I am profoundly indebted to my family. To my parents and brothers, whose love and sacrifices have given me every opportunity to pursue my education. Thank you for your encouragement, for reminding me to keep perspective, and for always believing in me even when I doubted myself. \\ And to my husband, Pouya, words cannot fully capture my gratitude. His patience, unwavering support, and countless sacrifices have carried me through every stage of this journey. He has been my anchor during challenges and my greatest source of joy in moments of success. This achievement belongs as much to my family as it does to me.}}%
+```
+
+##  {.center .middle}
+
+```{=latex}
+\centering
+\Huge 
+\textcolor{TitleBlue}{Thank you!}
+
+\vspace{8mm}
+
+\centering\includegraphics[height=0.25\textheight]{images/MU.png}\par
+```
