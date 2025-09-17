@@ -1081,68 +1081,6 @@ v=\frac{\pmb S_v(\pmb{\alpha}_v)\,\pmb X^\top u}{u^\top (I+\alpha_u\,\pmb{\Omega
 ```
 
 
-
-
-## Variance Explained: Classical vs Regularized FPCA
-
-::: incremental
-- **Classical FPCA:** Loadings $v_j$ orthonormal; scores $u_j=Xv_j$ uncorrelated.  
-  Variance explained by first $J$ PCs:
-  $$
-  \sum_{j=1}^J \|u_j\|^2
-  = \mathrm{trace}\!\big(V_J^\top X^\top X\,V_J\big),\qquad
-  V_J=[v_1,\dots,v_J].
-  $$
-
-- **Issue under regularization:** smoothness/sparsity break orthogonality → scores become correlated → naive sum $\sum \|u_j\|^2$ **double-counts** variance (cf. Huang et al., 2008).
-:::
-
-
-## Subspace-Projection Definition of Explained Variance
-
-::: incremental
-- Normalize loadings and stack:
-  $$
-  V_J=[v_1,\dots,v_J],\qquad v_j \leftarrow \frac{v_j}{\|v_j\|}.
-  $$
-
-- Orthogonal projector onto span $(v_1,\dots,v_J)$:
-  $$
-  H_J=V_J\,(V_J^\top V_J)^{-1} V_J^\top,\qquad
-  $$
-  where $H_{J}$ is a a symmetric idempotent matrix. ($H_{J}^{2}=H_{J},\; H_{J}^{\top}=H_{J}$)
-
-- Projected data and explained variance:
-  $$
-  X_J=X H_J,\qquad
-  \mathsf{V}_{\text{tot}}=\mathrm{tr}(X^\top X),\qquad
-  \mathcal{V}_J=\|X_J\|_F^2=\mathrm{tr}\!\big(H_J X^\top X H_J\big).
-  $$
-:::
-
-
-## PVE, Incremental PVE, and Properties
-
-::: incremental
-- Incremental variance:
-  $$
-  \Delta\mathcal{V}_j=\mathcal{V}_j-\mathcal{V}_{j-1},\qquad \mathcal{V}_0=0.
-  $$
-
-- **Proportion of variance explained (PVE):**
-  $$
-  \mathrm{PVE}(J)=\frac{\mathcal{V}_J}{\mathsf{V}_{\text{tot}}},\qquad
-  \mathrm{pve}_j=\frac{\Delta\mathcal{V}_j}{\mathsf{V}_{\text{tot}}}
-  =\mathrm{PVE}(j)-\mathrm{PVE}(j-1).
-  $$
-
-- **Key properties:**  
-  • No double-counting (works with correlated scores).  
-  • Reduces to classical PCA when $V_J^\top V_J=I_J$.  
-  • Monotone in $J$ ($\mathcal{V}_J$ increases).  
-  • $\Delta\mathcal{V}_j$ = unique variance added by component $j$.
-:::
-
 ## Simulation: Two-way Functional Data 
 - **Data-generating process:** $X^{(1)}_{ij} = u_{i1} v_{11}(t_j) + u_{i2} v_{12}(t_j) + \epsilon_{ij}^{(1)}, \quad X^{(2)}_{ij} = u_{i1} v_{21}(t_j) + u_{i2} v_{22}(t_j) + \epsilon_{ij}^{(2)},$
 - **Latent scores:** generated as smooth functions  
@@ -1356,14 +1294,15 @@ $$
   - Environmental monitoring  
 **Takeaway:**  Smooth + sparse + two-way FPCA offers a **theoretical foundation, practical algorithms, and open software** to enable next-generation functional data analysis.
 
-## References 
+## References {noframenumbering=true}
+
 ```{=latex}
 \tiny{
 \bibliography{ref}
 }
 ```
 
-## Acknowledgments 
+## Acknowledgments {noframenumbering=true}
 ```{=latex}
 \only<1>{\parbox{\textwidth}{This thesis would not have been possible without the support, guidance, and encouragement of many people.}}%
 
@@ -1378,7 +1317,7 @@ $$
 \only<6>{\parbox{\textwidth}{\textbf{My dear family:}\\ Most importantly, I am profoundly indebted to my family. To my parents and brothers, whose love and sacrifices have given me every opportunity to pursue my education. Thank you for your encouragement, for reminding me to keep perspective, and for always believing in me even when I doubted myself. \\ And to my husband, Pouya, words cannot fully capture my gratitude. His patience, unwavering support, and countless sacrifices have carried me through every stage of this journey. He has been my anchor during challenges and my greatest source of joy in moments of success. This achievement belongs as much to my family as it does to me.}}%
 ```
 
-##  {.center .middle}
+##  {.center .middle noframenumbering=true}
 
 ```{=latex}
 \centering
@@ -1389,3 +1328,69 @@ $$
 
 \centering\includegraphics[height=0.25\textheight]{images/MU.png}\par
 ```
+
+
+## Appendix {noframenumbering=true}
+\textcolor{TitleBlue}{Variance Explained: Classical vs Regularized FPCA}
+
+::: incremental
+- **Classical FPCA:** Loadings $v_j$ orthonormal; scores $u_j=Xv_j$ uncorrelated.  
+  Variance explained by first $J$ PCs:
+  $$
+  \sum_{j=1}^J \|u_j\|^2
+  = \mathrm{trace}\!\big(V_J^\top X^\top X\,V_J\big),\qquad
+  V_J=[v_1,\dots,v_J].
+  $$
+
+- **Issue under regularization:** smoothness/sparsity break orthogonality → scores become correlated → naive sum $\sum \|u_j\|^2$ **double-counts** variance (cf. Huang et al., 2008).
+:::
+
+
+
+## Appendix {noframenumbering=true}
+
+\textcolor{TitleBlue}{Subspace-Projection Definition of Explained Variance}
+
+::: incremental
+- Normalize loadings and stack:
+  $$
+  V_J=[v_1,\dots,v_J],\qquad v_j \leftarrow \frac{v_j}{\|v_j\|}.
+  $$
+
+- Orthogonal projector onto span $(v_1,\dots,v_J)$:
+  $$
+  H_J=V_J\,(V_J^\top V_J)^{-1} V_J^\top,\qquad
+  $$
+  where $H_{J}$ is a a symmetric idempotent matrix. ($H_{J}^{2}=H_{J},\; H_{J}^{\top}=H_{J}$)
+
+- Projected data and explained variance:
+  $$
+  X_J=X H_J,\qquad
+  \mathsf{V}_{\text{tot}}=\mathrm{tr}(X^\top X),\qquad
+  \mathcal{V}_J=\|X_J\|_F^2=\mathrm{tr}\!\big(H_J X^\top X H_J\big).
+  $$
+:::
+
+## Appendix {noframenumbering=true}
+\textcolor{TitleBlue}{PVE, Incremental PVE, and Properties}
+
+::: incremental
+- Incremental variance:
+  $$
+  \Delta\mathcal{V}_j=\mathcal{V}_j-\mathcal{V}_{j-1},\qquad \mathcal{V}_0=0.
+  $$
+
+- **Proportion of variance explained (PVE):**
+  $$
+  \mathrm{PVE}(J)=\frac{\mathcal{V}_J}{\mathsf{V}_{\text{tot}}},\qquad
+  \mathrm{pve}_j=\frac{\Delta\mathcal{V}_j}{\mathsf{V}_{\text{tot}}}
+  =\mathrm{PVE}(j)-\mathrm{PVE}(j-1).
+  $$
+
+- **Key properties:**  
+  • No double-counting (works with correlated scores).  
+  • Reduces to classical PCA when $V_J^\top V_J=I_J$.  
+  • Monotone in $J$ ($\mathcal{V}_J$ increases).  
+  • $\Delta\mathcal{V}_j$ = unique variance added by component $j$.
+:::
+
