@@ -101,6 +101,8 @@ header-includes:
     \definecolor{darknavy}{RGB}{0,0,102}
     \setbeamercolor{title}{fg=darknavy}
     \definecolor{DarkGreen}{HTML}{028A0F}
+    \definecolor{green}{HTML}{CC9900}
+    \definecolor{purple}{HTML}{660099}
     \definecolor{Clay}{HTML}{FC6A03}
     \definecolor{MUgold}{HTML}{FFC72C}     % gold
     \setbeamercolor{title}{fg=darknavy} % Make title dark navy
@@ -180,7 +182,7 @@ header-includes:
   \begin{column}{0.62\textwidth}
   {\small\normalfont
   \begin{itemize}
-    \item<1-> \textbf{Functional data} are observations that change continuously over a domain (like time, space, or wavelength) and are often visualized as curves, trajectories, or functions rather than isolated points.
+    \item<1-> \textbf{Functional data} are observations that change continuously over a domain (like time, or space) and are often visualized as curves, or functions rather than isolated points.
     \item<2-> In practice, these data are often recorded at discrete time points or grid locations, even though they originate from continuous processes in areas like engineering, finance, environmental science, and healthcare.
     \item<3-> \textbf{Functional Data Analysis (FDA)} is a statistical framework that treats these observations as realizations of smooth underlying functions, allowing for more accurate modeling and interpretation of continuous processes.
   \end{itemize}}
@@ -189,8 +191,8 @@ header-includes:
   % -------- Right: images ----------
   \begin{column}{0.38\textwidth}
     \vspace{-1.5em}
-    \only<1->{\centering\includegraphics[height=0.35\textheight]{images/FDA2.png}\par}
-    \only<2->{\centering\includegraphics[height=0.35\textheight]{images/FDA1.png}\par}
+    \only<1>{\centering\includegraphics[height=0.5\textheight]{images/Temp1.jpg}\par}
+    \only<2->{\centering\includegraphics[height=0.5\textheight]{images/temp2.jpg}\par}
   \end{column}
 \end{columns}
 
@@ -212,13 +214,21 @@ header-includes:
 ## Two-way Functional Principal Component Analysis {auto-animate="true"}
 
 ::: incremental
-- **Two-way functional data:** Observations vary along two domains (e.g., time $\times$ space, time $\times$ frequency), with applications in climate, neuroscience, finance, public health, and marketing.
+- **Two-way functional data:** Two-way functional data consist of a data matrix whose row and column domains are both structured, for example, temporally or spatially. Observations vary along these two domains (e.g., time × space, time × frequency), with applications in climate science, neuroscience, finance, public health, and marketing.
 
     ```{=latex}
-    % shows ONLY while the first bullet is active
-    \vspace{-1.5em}
-    \only<1>{\centering\includegraphics[width=0.3\linewidth]{images/NDVI.png}\par}
-    \vspace{1.5em}
+    \only<1>{
+      \centering
+      \begin{minipage}{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/two-way eg.png}
+      \end{minipage}
+      \hspace{1em}
+      \begin{minipage}{0.45\linewidth}
+        \centering
+        \includegraphics[height=0.6\textheight]{images/NDVI.png}
+      \end{minipage}
+    }
     ```
 :::
 
@@ -248,21 +258,23 @@ header-includes:
 
 
 ## Foundations of FPCA through Minimizing Reconstruction Error
-- **Goal:** Identify functional directions that maximize variance (low-rank approximation of functional data).  For functional data $X \in \mathbb{R}^{n \times m}$ contains the discretized functional observations (rows correspond to subjects, columns to grid points), $v\in\mathbb{R}^m$ represents the estimated principal component (function), and $u\in\mathbb{R}^n$ denotes the associated principal component scores.
+- **Goal:** Identify functional directions that maximize variance (low-rank approximation of functional data). For functional data $X \in \mathbb{R}^{n \times m}$ contains $\color{green}{n}$ discretized functional \textcolor{green}{observations (rows correspond to subjects)} and $\color{purple}{m}$ \textcolor{purple}{columns or grid points}. $\color{purple}{v\in\mathbb{R}^m}$ represents the estimated \textcolor{purple}{principal component (function)}, and $\color{green}{u\in\mathbb{R}^n}$ denotes the \textcolor{green}{associated principal component scores}.
+
 
 - **Reconstruction problem:** 
     ```{=latex}
+    \vspace{-1em}
     $$
-    \min_{u,v} \; \|X - uv^\top\|_F^2 = \operatorname{tr}\{(X - uv^\top)(X - uv^\top)^\top\},
+    \min_{u,v} \; \|X - uv^\top\|_F^2 = \min_{u,v}  \operatorname{tr}\{(X - uv^\top)(X - uv^\top)^\top\}.
     $$
     ```
 - **Optimization steps:**
     ```{=latex}
     $$
-      \vspace{-1.5em}
-      \text{Fix } v:\; u = \frac{Xv}{v^\top v} 
+      \vspace{-2em}
+      \text{Fix } v:\; u = \frac{Xv}{v^\top v},
       \qquad \text{and}  \qquad
-      \text{Fix } u:\; v = \frac{X^\top u}{u^\top u}
+      \text{Fix } u:\; v = \frac{X^\top u}{u^\top u}.
       \vspace{1.5em}
     $$
     ```
@@ -294,13 +306,14 @@ header-includes:
 ## Smooth Functional PCA
 - Problem setup [@huang2008functional]:  
   $$
-  \min_{u,v} \|X - uv^\top\|_F^2 + \color{TitleRed} {\alpha\, u^\top u \, v^\top \Omega v}
+  \min_{u,v} \|X - uv^\top\|_F^2 + \color{TitleRed} {\alpha\, v^\top \Omega v}
   $$
-  - $X \in \mathbb{R}^{n \times p}$: discretized functional data.  
+  - $X \in \mathbb{R}^{n \times m}$: discretized functional data.  
   - $u \in \mathbb{R}^n$: scores.  
-  - $v \in \mathbb{R}^p$: loading function.  
+  - $v \in \mathbb{R}^m$: loading function.  
   - $\Omega$: roughness penalty matrix (e.g., integrated squared 2nd derivative). 
   - $\alpha$: tuning parameter
+
 
 ::: incremental 
 - A power algorithm is defined to compute the PCs while incorporating smoothness penalty. 
@@ -328,7 +341,7 @@ header-includes:
 :::
 
 ::: incremental
-- For notational convenience, we define $\color{TitleRed}{S(\alpha) = (I +\alpha\Omega)^{-1}}$ $\in \mathbb{R}^{m\times m}$, which simplifies expressions involving regularization. The penalty matrix $\Omega$ is set up so that larger values of the quadratic form ${v}^\top {\Omega} {v}$ mean rougher functions. This means that it penalizes functions that change quickly between time points.
+- For notational convenience, we define smoothness matrix $\color{TitleRed}{S(\alpha) = (I +\alpha\Omega)^{-1}}$ $\in \mathbb{R}^{m\times m}$, which simplifies expressions involving regularization. The roughness matrix $\Omega$ is set up so that larger values of the quadratic form ${v}^\top {\Omega} {v}$ mean rougher functions. This means that it penalizes functions that change quickly between time points.
 ::: 
 
 ## Tunning Smoothness Parameters
@@ -353,12 +366,12 @@ header-includes:
 
 ## Sparse Functional PCA
 
-- *Standard FPCA loadings are dense, involving linear combinations of all grid points → hard to interpret.*  
-  **Sparsity** highlights only the most relevant features, thereby enhancing interpretability.
-- *Dense loadings capture noise → unstable components.*  
-  **Sparsity** filters out uninformative variation, yielding more robust principal components, reducing dimensionality, and facilitating interpretation.
+- *Standard FPC functions are dense, involving linear combinations of all grid points → hard to interpret.*  
+  **\textcolor{TitleBlue}{Sparsity}** highlights only the most relevant features, thereby enhancing interpretability.
+- *Dense FPC functions capture noise → unstable components.*  
+  **\textcolor{TitleBlue}{Sparsity}** filters out uninformative variation, yielding more robust principal components, reducing dimensionality, and facilitating interpretation.
 - *All grid points contribute equally → no feature selection.*   
-  **Sparsity** acts as an inherent feature selector, directing attention to key time points, with most entries reduced to zero while only a few contribute meaningfully to the structure.
+  **\textcolor{TitleBlue}{Sparsity}** acts as an inherent feature selector, directing attention to key time points, with most entries reduced to zero while only a few contribute meaningfully to the structure.
 - Sparse FPCA formulation [@huang2008sparse]:  
     ```{=latex}
     \vspace{-1em}
@@ -376,7 +389,7 @@ header-includes:
 ## Sparsity penalties
 
 \scriptsize
-- **Soft-thresholding (Lasso):**  
+- **Soft thresholding (Lasso):**  
   $$
   p^{\text{soft}}_\gamma(|\theta|) = 2 \gamma |\theta|, 
   \;\xrightarrow[\text{minimizer}]{}\;
@@ -433,7 +446,7 @@ To implement the sPCA-rSVD algorithm discussed above, we use the following itera
 ```
 
 ## Cross-Validation for Sparsity Selection
-- **Sparsity parameter**: Tuning parameter controlling number of non-zero loadings in $v$ ($0 =$ dense, $p =$ full sparsity).  
+- **Sparsity parameter**: Tuning parameter $\gamma$ controlling number of non-zero loadings in $v$ ($0 =$ dense, $m =$ full sparsity).  
 
 ```{=latex}
 \begin{block}{Algorithm: K-fold CV Tuning Parameter Selection - Degree of sparsity}
@@ -441,7 +454,7 @@ To implement the sPCA-rSVD algorithm discussed above, we use the following itera
 \small
 \begin{enumerate}
    \item Randomly group the rows of side-by-side data matrix $X$ into $K$ roughly equal-sized groups, denoted as $X^1,...,X^K$. 
-   \item For each sparse tuning parameter $j \in \{0,1,...,p\}$ (level of sparsity), do the following: 
+   \item For each sparse tuning parameter $j \in \{0,1,...,m\}$ (level of sparsity), do the following: 
    \begin{enumerate}
      \item For $k = 1,...,K$, let $X^{-k}$ be the data matrix $X$ leaving out $X^k$. Apply Algorithm sFPCA-rSVD on $X^{-k}$ and derive the FPC scores $u^{-k}(j)$. Then project $X^k$ onto $u^{-k}(j)$ to obtain $v^k(j)$.
      \item Calculate the K-fold CV scores defined as: ($N$ is the number of grid points in $X^k$)
@@ -478,9 +491,23 @@ To implement the sPCA-rSVD algorithm discussed above, we use the following itera
 
 # Regularized MFPCA {auto-animate="true"}
 \hypertarget{sec:svd}{}
+
 - **Context**  
   - Univariate FDA → **Multivariate FDA** (e.g., simultaneously recorded EEG channels, growth patterns of multiple anatomical measures.)  
   - MFPCA → **joint modes of variation** across functions  
+  
+```{=latex}
+    \only<1>{
+      \centering
+      \includegraphics[width=0.3\linewidth]{images/MFPCA eg.jpg}
+    }
+    \vspace{-1mm}
+```
+
+
+```{=latex}
+    \pause
+```
 
 - **Challenges**  
   - Discretization & irregular grids → noise, missing data  
@@ -586,7 +613,7 @@ x_{n1}(t_{11}) & \cdots & x_{n1}(t_{1,m_1}) & \cdots & x_{np}(t_{p1}) & \cdots &
     ```
 -  Sparsity parameters: $\pmb{\gamma}=(\gamma_1,\ldots,\gamma_p)$, where $\gamma_i$ ranges from 0 (no sparsity) to $m_i$ for each variable.
 ```{=latex}
-    \begin{block}{Algorithm: Regularized Power Iteration for Smooth MFPCA}
+    \begin{block}{Algorithm: Regularized Power Iteration for Sparse MFPCA}
       \small
       \begin{enumerate}
         \item {Initialization:}
@@ -614,7 +641,7 @@ x_{n1}(t_{11}) & \cdots & x_{n1}(t_{1,m_1}) & \cdots & x_{np}(t_{p1}) & \cdots &
    \item Repeat till convergence 
    \begin{enumerate}
      \item ${u} \leftarrow\pmb{X}{v}$
-     \item ${v} \leftarrow \textcolor{TitleRed}{\pmb{S}(\pmb{\alpha})} \textcolor{TitleBlue}{\pmb{h}(\gamma_v)} \pmb{X}^\top {u}$ 
+     \item ${v} \leftarrow \textcolor{TitleRed}{\pmb{S}(\pmb{\alpha})} \textcolor{TitleBlue}{\pmb{h}(\pmb{\gamma_v})} \pmb{X}^\top {u}$ 
      \item ${v}\leftarrow \frac{{v}}{\Vert {v}\Vert}$
    \end{enumerate}
    \item Update $\pmb{X} = \pmb{X} -\sigma uv^\top$ and proceed to find the next principal component. 
@@ -782,7 +809,7 @@ Regularization reduces noise while preserving the dominant daily consumption pat
 
 # Two-way Regularized MFPCA {auto-animate="true"}
 \hypertarget{sec:two_way}{}
-- **Two-way functional data:** Each observation is a *matrix of curves*, with smooth variation across **two domains**  (e.g., time × space in air quality, time × channels in EEG).  
+- **Two-way functional data:** Each observation is a matrix of curves showing smooth variation across two structured domains (e.g., time × space). Both the row and column axes are meaningful (temporal or spatial), so signals vary along both directions.
 ```{=latex}
 \pause
 ```
@@ -804,9 +831,9 @@ Regularization reduces noise while preserving the dominant daily consumption pat
 ```
 
 - **Our contribution:**  
-  - Extend to **multivariate functional data** (multiple functional variables).  
+  - Extend to **two-way multivariate functional data** (multiple functional variables).  
   - Combine **\textcolor{TitleRed}{smoothness} + \textcolor{TitleBlue}{sparsity} penalties** in both directions.  
-  - Result: Low-rank, interpretable, noise-robust principal components for high-dimensional applications.  
+  - Result: Low-rank, interpretable, noise-robust PCs for high-dimensional applications.  
 
   
 
@@ -1314,7 +1341,7 @@ $$
 
 \only<5>{\parbox{\textwidth}{\textbf{Department and peers:}\\ I appreciate the Department of Mathematical and Statistical Sciences at Marquette University for a supportive, collaborative environment, and I thank my friends and labmates for their companionship, encouragement, and good humor.}}%
 
-\only<6>{\parbox{\textwidth}{\textbf{My dear family:}\\ Most importantly, I am profoundly indebted to my family. To my parents and brothers, whose love and sacrifices have given me every opportunity to pursue my education. Thank you for your encouragement, for reminding me to keep perspective, and for always believing in me even when I doubted myself. \\ And to my husband, Pouya, words cannot fully capture my gratitude. His patience, unwavering support, and countless sacrifices have carried me through every stage of this journey. He has been my anchor during challenges and my greatest source of joy in moments of success. This achievement belongs as much to my family as it does to me.}}%
+\only<6>{\parbox{\textwidth}{\textbf{My dear family:}\\Most importantly, I am profoundly indebted to my family and my husband’s family. Their love, sacrifices, and unwavering support have given me every opportunity to pursue my education. I am especially grateful for their constant encouragement, for reminding me to keep perspective, and for always believing in me even when I doubted myself. \\ And to my husband, Pouya, words cannot fully capture my gratitude. His patience, unwavering support, and countless sacrifices have carried me through every stage of this journey. He has been my anchor during challenges and my greatest source of joy in moments of success. This achievement belongs as much to my family as it does to me.}}%
 ```
 
 ##  {.center .middle noframenumbering=true}

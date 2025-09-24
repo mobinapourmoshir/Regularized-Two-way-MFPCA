@@ -6,7 +6,7 @@ format:
     poster-authors: "Mobina Pourmoshir, Dr. Mehdi Maadooliat"
     departments: "Department of Mathematical and Statistical Sciences"
     institution-logo: "./images/MU.png"
-    institution-logo-width: "0.2cm"
+    institution-logo-width: "10mm"
     footer-text: "posit::conf 2023"
     footer-url: "https://posit.co/conference/"
     footer-emails: "mobina.pourmoshir@marquette.edu"
