@@ -101,7 +101,7 @@ header-includes:
     \definecolor{darknavy}{RGB}{0,0,102}
     \setbeamercolor{title}{fg=darknavy}
     \definecolor{DarkGreen}{HTML}{028A0F}
-    \definecolor{green}{HTML}{CC9900}
+    \definecolor{green}{HTML}{FF4000}
     \definecolor{purple}{HTML}{660099}
     \definecolor{Clay}{HTML}{FC6A03}
     \definecolor{MUgold}{HTML}{FFC72C}     % gold
@@ -183,16 +183,17 @@ header-includes:
   {\small\normalfont
   \begin{itemize}
     \item<1-> \textbf{Functional data} are observations that change continuously over a domain (like time, or space) and are often visualized as curves, or functions rather than isolated points.
+    \vspace{0.5em}
     \item<2-> In practice, these data are often recorded at discrete time points or grid locations, even though they originate from continuous processes in areas like engineering, finance, environmental science, and healthcare.
+    \vspace{0.5em}
     \item<3-> \textbf{Functional Data Analysis (FDA)} is a statistical framework that treats these observations as realizations of smooth underlying functions, allowing for more accurate modeling and interpretation of continuous processes.
   \end{itemize}}
   \end{column}
 
   % -------- Right: images ----------
   \begin{column}{0.38\textwidth}
-    \vspace{-1.5em}
-    \only<1>{\centering\includegraphics[height=0.5\textheight]{images/Temp1.jpg}\par}
-    \only<2->{\centering\includegraphics[height=0.5\textheight]{images/temp2.jpg}\par}
+    \only<1>{\centering\includegraphics[height=0.55\textheight]{images/Temp1.jpg}\par}
+    \only<2->{\centering\includegraphics[height=0.55\textheight]{images/temp2.jpg}\par}
   \end{column}
 \end{columns}
 
@@ -202,33 +203,42 @@ header-includes:
 
 - **Functional PCA (FPCA):** An extension of classical PCA for dimension reduction and uncovering hidden patterns in functional data; it identifies orthogonal functions that capture the main sources of variation, preserving the most important information. [@ramsay2005functional].
 
+\vspace{1em}
+
 - **Extensions of FPCA:**
-  - \textcolor{TitleRed}{Smoothed FPCA}: Adds roughness penalties for smoothness [@silverman1996smoothed; @huang2008functional].
+  - \textcolor{TitleRed}{Smoothed FPCA}: Adds roughness penalties [@silverman1996smoothed; @huang2008functional].
   - \textcolor{TitleBlue}{Sparse FPCA}: Enforces sparsity for interpretability [@huang2008sparse; @SparsePCA2020].
-  - Multivariate FPCA (MFPCA): Extends FPCA to multivariate functions [@silverman1996smoothed; @Happ_2018].
+  - Multivariate FPCA (MFPCA) [@silverman1996smoothed; @Happ_2018].
   - Regularized MFPCA: Penalties improve estimation & interpretability [@haghbin2023regMFPCA].
 
-- **Impact:** More adaptable, robust, and applicable across diverse scientific and business problems.
+\vspace{1em}
+
+- **Impact:** More adaptable, robust, and applicable across different problems.
 
 
 ## Two-way Functional Principal Component Analysis {auto-animate="true"}
 
 ::: incremental
-- **Two-way functional data:** Two-way functional data consist of a data matrix whose row and column domains are both structured, for example, temporally or spatially. Observations vary along these two domains (e.g., time × space, time × frequency), with applications in climate science, neuroscience, finance, public health, and marketing.
+- **Two-way functional data:** Two-way functional data consist of a data matrix whose row and column domains are both structured. Observations vary along these two domains (e.g., time × frequency), with applications in climate science, neuroscience, etc.
 
     ```{=latex}
-    \only<1>{
+  \only<1>{
+    \centering
+    % Left image (moved up a bit)
+    \begin{minipage}{0.55\linewidth}
       \centering
-      \begin{minipage}{0.45\linewidth}
-        \centering
-        \includegraphics[width=\linewidth]{images/two-way eg.png}
-      \end{minipage}
-      \hspace{1em}
-      \begin{minipage}{0.45\linewidth}
-        \centering
-        \includegraphics[height=0.6\textheight]{images/NDVI.png}
-      \end{minipage}
-    }
+      \vspace{-2em} % <-- adjust this value
+      \includegraphics[width=\linewidth]{images/two-way eg.png}
+    \end{minipage}
+    \hspace{1em}
+    % Right image (unchanged)
+    \begin{minipage}{0.40\linewidth}
+      \centering
+      \includegraphics[height=0.6\textheight]{images/NDVI.png}
+    \end{minipage}
+  }
+
+
     ```
 :::
 
@@ -258,7 +268,7 @@ header-includes:
 
 
 ## Foundations of FPCA through Minimizing Reconstruction Error
-- **Goal:** Identify functional directions that maximize variance (low-rank approximation of functional data). For functional data $X \in \mathbb{R}^{n \times m}$ contains $\color{green}{n}$ discretized functional \textcolor{green}{observations (rows correspond to subjects)} and $\color{purple}{m}$ \textcolor{purple}{columns or grid points}. $\color{purple}{v\in\mathbb{R}^m}$ represents the estimated \textcolor{purple}{principal component (function)}, and $\color{green}{u\in\mathbb{R}^n}$ denotes the \textcolor{green}{associated principal component scores}.
+- **Goal:** Extract the key functional directions that explain the main structure of the data using a low-rank representation. For functional data $X \in \mathbb{R}^{n \times m}$ contains $\color{green}{n}$ discretized functional \textcolor{green}{observations (rows correspond to subjects)} and $\color{purple}{m}$ \textcolor{purple}{columns or grid points}. $\color{purple}{v\in\mathbb{R}^m}$ represents the estimated \textcolor{purple}{principal component (function)}, and $\color{green}{u\in\mathbb{R}^n}$ denotes the \textcolor{green}{associated principal component scores}.
 
 
 - **Reconstruction problem:** 
@@ -284,8 +294,7 @@ header-includes:
 
 - **Goal:** Balance **variance explanation**, **smoothness**, and **interpretability**. 
 
-::: {.fragment style="height: 0.5em"}
-:::
+\vspace{1em}
 
 - Reformulate FPCA as a **penalized low-rank approximation** problem:  
   $$
@@ -296,8 +305,7 @@ header-includes:
   - **\textcolor{TitleRed}{Smooth FPCA:}** adds roughness penalty on functions.  
   - **\textcolor{TitleBlue}{Sparse FPCA:}** adds sparsity penalty on loadings.  
 
-::: {.fragment style="height: 0.5em"}
-:::
+\vspace{1em}
 
 - **Algorithms:** Based on iterative **power method** and **thresholding** updates.  
 
@@ -317,7 +325,7 @@ header-includes:
 
 ::: incremental 
 - A power algorithm is defined to compute the PCs while incorporating smoothness penalty. 
-- Consider the SVD of $X$ as $X = UDV^\top$, where $U$ and $V$ have orthonormal columns and $D$ is diagonal with ordered singular values.  In particular, for $X = u d v^\top$, $v$ is the first principal component and $u = u d$ gives the associated scores.   With these representations, the power algorithm (described below) converges quickly, typically in only a few iterations.
+- Consider the SVD of $X$.  In particular, for $X = u d v^\top$, $v$ is the first principal component and $u = u d$ gives the associated scores.
 :::
 
 ## Power Algorithm
@@ -330,7 +338,7 @@ header-includes:
   \item Repeat until convergence:
     \begin{enumerate}
       \item $u \leftarrow Xv$
-      \item $v \leftarrow \textcolor{TitleRed}{(I + \alpha\Omega)^{-1} }X^\top u$
+      \item $v \leftarrow \textcolor{TitleRed}{S(\alpha)}X^\top u$
       \item $v \leftarrow \dfrac{v}{\lVert v \rVert}$ % use \frac if you didn't load amsmath
     \end{enumerate}
   \item Update $X \leftarrow X - \sigma\, u v^\top$ and proceed to next component.
@@ -366,22 +374,34 @@ header-includes:
 
 ## Sparse Functional PCA
 
-- *Standard FPC functions are dense, involving linear combinations of all grid points → hard to interpret.*  
-  **\textcolor{TitleBlue}{Sparsity}** highlights only the most relevant features, thereby enhancing interpretability.
-- *Dense FPC functions capture noise → unstable components.*  
-  **\textcolor{TitleBlue}{Sparsity}** filters out uninformative variation, yielding more robust principal components, reducing dimensionality, and facilitating interpretation.
-- *All grid points contribute equally → no feature selection.*   
-  **\textcolor{TitleBlue}{Sparsity}** acts as an inherent feature selector, directing attention to key time points, with most entries reduced to zero while only a few contribute meaningfully to the structure.
-- Sparse FPCA formulation [@huang2008sparse]:  
+- *Standard FPCA faces several key challenges:*  
+  - FPCs are typically dense, formed as linear combinations of all grid points → hard to interpret. 
+  - Dense components often capture noise, leading to unstable and less reliable results.  
+  - All grid points contribute, there is no feature selection → so uninformative regions are included.  
+  - In many real-world applications, parts of the data are structurally zero. Also, when $m \gg n$, the data matrix becomes rank-deficient  → further complicating estimation.
+
+```{=latex}
+    \pause
+```
+
+- **\textcolor{TitleBlue}{Sparsity}** directly addresses these issues:  
+  - It highlights the most relevant features, making components more interpretable.  
+  - It filters noise and uninformative variation, producing more stable and robust PCs.   
+  - It acts as a feature selector, shrinking most coefficients to zero, focusing on informative regions. 
+  - It is useful in high-dimensional or sparse settings, improving estimation and revealing essential structure.
+
+
+```{=latex}
+    \pause
+```
+  
+
+- Sparse FPCA with $\textcolor{TitleBlue}{p_\gamma(v)}$ as sparsity penalty term [@huang2008sparse]:  
     ```{=latex}
     \vspace{-1em}
     \begin{equation}\label{eq:sparse}
     \min_{u,v} \|X - uv^\top\|_F^2 + \textcolor{TitleBlue}{p_\gamma(v)}
     \end{equation}
-    \vspace{-1.5em}
-    \begin{flushleft}
-    \qquad \quad where $\textcolor{TitleBlue}{p_\gamma(v)}$ is a sparsity-inducing penalty. 
-    \end{flushleft}
     ```
    
 
@@ -429,12 +449,14 @@ where $a=3.7$ (\cite{fan2001}).
 ## sFPCA-rSVD Algorithm
 To implement the sPCA-rSVD algorithm discussed above, we use the following iterative procedure to minimize the objective function defined in Equation \eqref{eq:sparse}. 
 
+\vspace{1.5em}
+
 ```{=latex}
 \begin{block}{Algorithm: sFPCA-rSVD}
 \begin{enumerate}
   \item {Initialization:}  
         Compute the best rank-one approximation of $X$ using singular value decomposition (SVD),  
-        where $X \approx s u v^\top$, and set $u \leftarrow s u$.
+        where $X \approx d u v^\top$, and set $u \leftarrow d u$.
   \item Iterate until convergence: 
     \begin{enumerate}
       \item {Update Left Singular Vector:} $u \leftarrow Xv$
@@ -477,33 +499,37 @@ To implement the sPCA-rSVD algorithm discussed above, we use the following itera
   - Algorithm: Penalized power iteration.  
   - Tuning: $\color{TitleRed}\alpha$ (smoothness) via \textcolor{TitleRed}{GCV}.  
 
+\vspace{0.5em}
+
 - **\textcolor{TitleBlue}{Sparse FPCA}:**  
   - Pros: Feature selection → interpretable.  
   - Algorithm: sFPCA-rSVD algorithm.  
   - Tuning: $\color{TitleBlue}\gamma$ (sparsity) via \textcolor{TitleBlue}{CV}.  
 
+\vspace{0.5em}
+
 - **Combined Approaches:** Smooth + Sparse together.  
   $$
   \min_{u,v} \|X - uv^\top\|_F^2 + \color{TitleRed}{\alpha v^\top \Omega v} \color{black}+ \color{TitleBlue}{p_\gamma(v)}
   $$  
-- Trade-off: **Variance explained vs Interpretability vs Smoothness**.  
+
 
 
 # Regularized MFPCA {auto-animate="true"}
 \hypertarget{sec:svd}{}
 
 - **Context**  
-  - Univariate FDA → **Multivariate FDA** (e.g., simultaneously recorded EEG channels, growth patterns of multiple anatomical measures.)  
-  - MFPCA → **joint modes of variation** across functions  
+  - Univariate FDA → **Multivariate FDA** → joint modes of variation across functions  
   
 ```{=latex}
     \only<1>{
       \centering
-      \includegraphics[width=0.3\linewidth]{images/MFPCA eg.jpg}
+      \includegraphics[width=0.4\linewidth]{images/MFPCA eg.jpg}
     }
     \vspace{-1mm}
 ```
 
+\vspace{0.6em}
 
 ```{=latex}
     \pause
@@ -511,13 +537,17 @@ To implement the sPCA-rSVD algorithm discussed above, we use the following itera
 
 - **Challenges**  
   - Discretization & irregular grids → noise, missing data  
-  - High dimensionality and limited sample size → unstable eigenfunctions (sensitive to small fluctuations in the data)
+  - High dimensionality and limited sample size → unstable eigenfunctions 
   - Cross-function correlation → requires enforcing smoothness both within and across functions
+
+\vspace{0.6em}
 
 - **Proposed Solution: Penalized SVD**  
   - **\textcolor{TitleRed}{Smoothness} penalties**: roughness on derivatives  
   - **\textcolor{TitleBlue}{Sparsity} penalties**: Soft, hard, or SCAD 
   - **Block-diagonal roughness matrix** for cross-function structure  
+
+\vspace{0.6em}
 
 - **Impact**  
   - Produces **smooth, sparse, interpretable** joint modes  
@@ -537,15 +567,15 @@ To implement the sPCA-rSVD algorithm discussed above, we use the following itera
   \quad u_i \in \mathbb{R}^n, \; v_i \in \mathbb{R}^{m_i}
   $$
 
-- **Full data matrix**:  $\mathbf{X} = [X_1\quad X_2\quad \cdots\quad X_p]  \in \mathbb{R}^{n \times \sum_{i=1}^p m_i}$
+- **Full data matrix**:  $\mathbf{X} = \big[\,{\begingroup\color{green}X_1\endgroup}\; X_2 \; \cdots \; {\begingroup\color{purple}X_p\endgroup}\,\big]$
  
   $$
-  \pmb{X}  = 
-\begin{bmatrix}
-x_{11}(t_{11}) & \cdots & x_{11}(t_{1,m_1}) & \cdots & x_{1p}(t_{p1}) & \cdots & x_{1p}(t_{p,m_p})\\
-\vdots         & \ddots & \vdots             & \ddots & \vdots         & \ddots & \vdots\\
-x_{n1}(t_{11}) & \cdots & x_{n1}(t_{1,m_1}) & \cdots & x_{np}(t_{p1}) & \cdots & x_{np}(t_{p,m_p})
-\end{bmatrix}.
+  \mathbf{X} =
+  \begin{bmatrix}
+  \color{green}{x_{11}(t_{11})} & \color{green}{\cdots} & \color{green}{x_{11}(t_{1m_1})} & \cdots & \color{purple}{x_{1p}(t_{p1})} & \color{purple}{\cdots} & \color{purple}{x_{1p}(t_{p m_p})} \\
+  \color{green}{\vdots} & \color{green}{\ddots} & \color{green}{\vdots} & \ddots & \color{purple}{\vdots} & \color{purple}{\ddots} & \color{purple}{\vdots} \\
+  \color{green}{x_{n1}(t_{11})} & \color{green}{\cdots} & \color{green}{x_{n1}(t_{1m_1})} & \cdots & \color{purple}{x_{np}(t_{p1})} & \color{purple}{\cdots} & \color{purple}{x_{np}(t_{p m_p})}
+  \end{bmatrix}
   $$
 :::
 
@@ -585,7 +615,7 @@ x_{n1}(t_{11}) & \cdots & x_{n1}(t_{1,m_1}) & \cdots & x_{np}(t_{p1}) & \cdots &
   \item Repeat until convergence:
     \begin{enumerate}
       \item $u \leftarrow \mathbf{X}v$
-      \item $v \leftarrow \textcolor{TitleRed}{(I + \boldsymbol{\alpha}\boldsymbol{\Omega})^{-1}}\mathbf{X}^\top u$
+      \item $v \leftarrow \textcolor{TitleRed}{\pmb{S}(\pmb{\alpha})}\mathbf{X}^\top u$
       \item $v \leftarrow v / \lVert v \rVert$
     \end{enumerate}
   \item Update $\mathbf{X} \leftarrow \mathbf{X} - \sigma u v^\top$ to extract the next PC.
@@ -597,7 +627,7 @@ x_{n1}(t_{11}) & \cdots & x_{n1}(t_{1,m_1}) & \cdots & x_{np}(t_{p1}) & \cdots &
     ```{=latex}
   \vspace{-1.5em}
 \begin{equation}\label{eq:MGCV one-way}
-	\textcolor{TitleRed}{\text{GCV}(\pmb{\alpha}) = \frac{1}{M} \frac{\Vert ({I} - \pmb{S}(\pmb{\alpha})) (\mathbf{X}^T u) \Vert^2}{\left(1 - \frac{1}{M} \text{tr} \{\mathbf{S}(\pmb{\alpha})\}\right)^2}}.
+	\textcolor{TitleRed}{\text{GCV}(\pmb{\alpha}) = \frac{1}{M} \frac{\Vert ({I} - \pmb{S}(\pmb{\alpha})) (\mathbf{X}^T u) \Vert^2}{\left(1 - \frac{1}{M} \text{tr} \{\pmb{S}(\pmb{\alpha})\}\right)^2}}.
 \end{equation}
     ```
 :::
@@ -617,7 +647,7 @@ x_{n1}(t_{11}) & \cdots & x_{n1}(t_{1,m_1}) & \cdots & x_{np}(t_{p1}) & \cdots &
       \small
       \begin{enumerate}
         \item {Initialization:}
-              Compute rank-one SVD of $\pmb{X}$, $\pmb{X}\approx suv^\top$, and set $u \gets su$.
+              Compute rank-one SVD of $\pmb{X}$, $\pmb{X}\approx duv^\top$, and set $u \gets du$.
         \vspace{-0.5em}      
         \item {Iterate until convergence:}
           \begin{enumerate}
@@ -662,6 +692,13 @@ x_{n1}(t_{11}) & \cdots & x_{n1}(t_{1,m_1}) & \cdots & x_{np}(t_{p1}) & \cdots &
   X^{(2)}_{ij} = u_{i1} v_{21}(t_j) + u_{i2} v_{22}(t_j) + \epsilon_{ij}^{(2)},
   $$
   - where $u_{i1}\sim N(0,\sigma_1^2),\; u_{i2}\sim N(0,\sigma_2^2)$, $\epsilon_{ij}^{(k)} \sim N(0,\sigma^2)$, and $n=m=101,\; t_j \in [-1,1]$  
+
+    ```{=latex}
+    \pause
+    \vspace{0.8em}
+    ```
+
+
 
 - **True functional PCs:**  
   - Variable 1:  
@@ -793,26 +830,23 @@ x_{n1}(t_{11}) & \cdots & x_{n1}(t_{1,m_1}) & \cdots & x_{np}(t_{p1}) & \cdots &
 ::: columns
 ::: {.column width="45%"}
 - **Dataset:** Bivariate functional data including active power and voltage consumption [@HouseholdElectricPower] for one household between December 2006 and November 2010.
-- **Scaling:** To equalize the contribution of each variable in the multivariate analysis, we rescale them following [@Happ_2018].
-$\tilde{X}_j(t_i) = \hat{w}_j^{1/2} X_j(t_i),$
-$\hat{w}_j = \left( \frac{1}{m} \sum_{i=1}^{m} \widehat{\mathrm{Var}}(X_j(t_i)) \right)^{-1}.$
+\vspace{1.5em}
+- Regularization reduces noise while preserving the dominant daily consumption patterns, enhancing interpretability without losing key structure.
 :::
 
 ::: {.column width="55%"}
-![](images/Electrical_PCS.pdf){height="0.55\textheight"}
+![](images/Electrical_PCS.pdf){height="0.60\textheight"}
 
 \centering \tiny First 3 PCs: MFPCA (red) vs ReMFPCA (black)
 :::
 :::
-Regularization reduces noise while preserving the dominant daily consumption patterns, enhancing interpretability without losing key structure.
+
 
 
 # Two-way Regularized MFPCA {auto-animate="true"}
 \hypertarget{sec:two_way}{}
-- **Two-way functional data:** Each observation is a matrix of curves showing smooth variation across two structured domains (e.g., time × space). Both the row and column axes are meaningful (temporal or spatial), so signals vary along both directions.
-```{=latex}
-\pause
-```
+- **Two-way functional data:** Two-way functional data consist of a data matrix whose row and column domains are both structured
+
 - **Limitation of standard FPCA [@ramsay2005functional]:**  
   - Focuses on one domain (often time).  
   - Penalties applied only to loadings → ignores structure in second domain.  
@@ -825,10 +859,6 @@ Regularization reduces noise while preserving the dominant daily consumption pat
 - **Two-way FPCA [@twoway_huang]:**  
   - Introduced **smoothness penalties** on both scores and loadings.  
   - Produces coherent, interpretable *component surfaces* instead of jagged approximations.  
-
-```{=latex}
-\pause
-```
 
 - **Our contribution:**  
   - Extend to **two-way multivariate functional data** (multiple functional variables).  
@@ -881,7 +911,7 @@ v=\frac{\pmb S_v(\pmb{\alpha}_v)\,\pmb X^\top u}{u^\top (I+\alpha_u\,\pmb{\Omega
 \pause
 ```
 
-- Conditional GCV criteria:  
+- Conditional GCV criteria [@twoway_huang]:  
     ```{=latex}
     \vspace{-4mm}
   \small
@@ -1123,6 +1153,10 @@ v=\frac{\pmb S_v(\pmb{\alpha}_v)\,\pmb X^\top u}{u^\top (I+\alpha_u\,\pmb{\Omega
   $$
     ```
 
+```{=latex}
+\pause
+```
+
 - **Functional PCs:**  
   - Variable 1: $v_{11}(t)=\tfrac{t+\sin(\pi t)}{s_1},\qquad v_{12}(t)=\tfrac{\cos(3\pi t)}{s_2}$
   - Variable 2:  
@@ -1244,8 +1278,14 @@ Two-way Smoothness  & \textbf{1.000} & \textbf{1.000} & \textbf{1.00} & 1.21 \\
 ## Application: Motion Sense Data
 
 - **Dataset:** Acceleration and pitch from 24 people, 4 activities (jogging, walking, sitting, standing), about 2–3 min each.
+
+\vspace{1em}
+
 - **Goal:** Compare SVD vs **two-way sparse + smooth ReMFPCA** on these multivariate functional signals.
-- **Rescaling (Happ & Greven, 2018):** balance variables so each contributes equally.
+
+\vspace{1em}
+
+- **Rescaling [@Happ_2018]:** balance variables so each contributes equally.
   
 $$
 \hat{w}_j=\left(\frac{1}{m}\sum_{i=1}^m \widehat{\mathrm{Var}}\!\big(X_j(t_i)\big)\right)^{-1},
@@ -1253,7 +1293,7 @@ $$
 \tilde{X}_j(t_i)=\hat{w}_j^{1/2}X_j(t_i).
 $$
 
-- **Penalties used:** smoothness + sparsity on loadings $v$; sparsity on scores $u$ (treated as random effects).
+- **Penalties used:** smoothness + sparsity on loadings $v$; sparsity on scores $u$.
 
 ## Results: Functional PCs (SVD vs ReMFPCA)
 
@@ -1286,16 +1326,14 @@ $$
   - Combines **smoothness** (denoise, interpretability) + **sparsity** (variable selection).  
   - Extends from **univariate → multivariate → two-way functional data**.  
 
-::: {.fragment style="height: 0.5em"}
-:::
+\vspace{1em}
 
 - **Methodology**  
   - Penalized SVD with roughness + $\ell_1$ penalties.  
   - Two-way regularization: smoothness & sparsity on both **scores ($u$)** and **loadings ($v$)**.  
   - Efficient parameter tuning: **conditional GCV** & **K-fold CV** (with 1-SE rule).  
 
-::: {.fragment style="height: 0.5em"}
-:::
+\vspace{1em}
 
 - **Results**  
   - Simulations & applications (mortality, call-center, image data).  
@@ -1384,7 +1422,7 @@ $$
   V_J=[v_1,\dots,v_J],\qquad v_j \leftarrow \frac{v_j}{\|v_j\|}.
   $$
 
-- Orthogonal projector onto span $(v_1,\dots,v_J)$:
+- Orthogonal projector matrix onto span $(v_1,\dots,v_J)$:
   $$
   H_J=V_J\,(V_J^\top V_J)^{-1} V_J^\top,\qquad
   $$
