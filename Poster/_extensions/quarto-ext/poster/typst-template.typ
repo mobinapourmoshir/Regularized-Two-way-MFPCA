@@ -55,7 +55,7 @@
   title_font_size: "48",
 
   // Authors' font size (in pt).
-  authors_font_size: "36",
+  authors_font_size: "30",
 
   // Footer's URL and email font size (in pt).
   footer_url_font_size: "30",
@@ -168,7 +168,7 @@
   row-gutter: 50pt,
 
   // University logo (scaled explicitly)
-  image(univ_logo, width: 4in),
+  image(univ_logo, width: 3.5in),
 
   // Title and author info (multi-line)
   block(

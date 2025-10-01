@@ -75,10 +75,69 @@ $$
 $$
 
 
-# Two-way Extension
+
+# Two-way Regularized MFPCA
+
+- **Two-way functional data:**  
+  Two-way functional data consist of a data matrix whose row and column domains are both structured. Classical FPCA focuses on one domain and penalizes only one set of components, often ignoring structure in the second direction.
+
+
+- **Framework & Penalty:**  
+  $$
+  \min_{u,v} \|\pmb X - uv^\top\|_F^2 + 
+    \sum_j^J \mathcal P_j^{[\theta]}(u,v)
+  $$
+- where $J$ is the number of penalty components, and $\theta$ is the vector of all tuning parameters. The composite penalty $\sum_{j=1}^J \mathcal{P}_j^{(\theta)}(u,v)$ lets us mix regularizers, e.g., smoothness with $\theta=(\alpha_u,\boldsymbol{\alpha}_v)$ and sparsity with $\theta=(\gamma_u,\boldsymbol{\gamma}_v)$ (controlling sparsity), and can include other structures as needed.
 
 
 
+- **Sequential Power Algorithm:**  
+  1. Initialize $u, v$ using rank-one SVD of $\mathbf{X}$.  
+  2. Update $u$ with smoothing and sparsity transformations:  
+     $u \leftarrow S_u^{[\alpha_u]} h_u^{[\gamma_u]}(\mathbf{X}v)$  
+  3. Update $v$ similarly:  
+     $v \leftarrow S_v^{[\boldsymbol{\alpha}_v]} h_v^{[\boldsymbol{\gamma}_v]}(\mathbf{X}^\top u)$  
+  4. Normalize $v$ and deflate $\mathbf{X}$ to extract further components.
+
+- **Tuning:**  
+    - $\alpha_u$, $\boldsymbol{\alpha}_v$ → control **smoothness** of scores and loadings.  
+    - $\gamma_u$, $\boldsymbol{\gamma}_v$ → control **sparsity** of scores and loadings.
+  - **Strategy (Conditional Tuning):**  
+    1. Initialize with no penalties.  
+    2. Use **cross-validation (CV)** to tune sparsity parameters.  
+    3. Use **generalized cross-validation (GCV)** to tune smoothness parameters.  
+    4. Alternate steps 2–3 until convergence for an optimal balance of smoothness and sparsity.
+
+
+
+```{=typst}
+#grid(
+  columns: 2,
+  gutter: 12pt,
+
+  // Row 1
+  block(image("images/True.jpg", width: 3.2in) + text(10pt, "\nTrue")),
+  block(image("images/NoisyChessboard.jpg", width: 3.2in) + text(10pt, "\nNoisy")),
+
+  // Row 2
+  block(image("images/svd_Reconstructed.jpg", width: 3.2in) + text(10pt, "\nSVD reconstructed")),
+  block(image("images/smooth_reconstructed.jpg", width: 3.2in) + text(10pt, "\nSmoothed reconstructed")),
+
+  // Row 3
+  block(image("images/Lasso_reconstructed.jpg", width: 3.2in) + text(10pt, "\nGroup LASSO reconstructed")),
+
+  // U & V side-by-side in the right-bottom cell (nested grid)
+  block(
+    grid(
+      columns: 2,
+      gutter: 8pt,
+      image("images/u1plots.jpg", width: 3.05in),
+      image("images/v1plots.jpg", width: 3.05in),
+    )
+    + text(10pt, "\nScores (u)      Loadings (v)")
+  )
+)
+```
 
 
 
