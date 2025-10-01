@@ -1,20 +1,20 @@
 ---
-title: This is an academic poster with typst and quarto!
+title: Regularized Multivariate Two-way Functional Principal Component Analysis
 format:
   poster-typst: 
     size: "36x24"
     poster-authors: "Mobina Pourmoshir, Dr. Mehdi Maadooliat"
     departments: "Department of Mathematical and Statistical Sciences"
     institution-logo: "./images/MU.png"
-    institution-logo-width: "10mm"
-    footer-text: "posit::conf 2023"
-    footer-url: "https://posit.co/conference/"
+    footer-text: "CSSRFP 2025"
+    footer-url: "https://github.com/mobinapourmoshir/ReMPCA"
     footer-emails: "mobina.pourmoshir@marquette.edu"
     footer-color: "ebcfb2"
-    keywords: ["Functional Data Analysis", "Functional PCA", "Dimension Reduction"]
+bibliography: refs.bib
+csl: apa.csl 
 ---
 
-# Lorem Ipsum Dolor
+# Background
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur. Quod idem licet transferre in voluptatem, ut postea variari voluptas distinguique possit, augeri amplificarique non possit. At etiam Athenis, ut e patre audiebam facete et urbane Stoicos irridente, statua est in quo a nobis philosophia defensa et collaudata est, cum id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, om- nis dolor repellendus. Temporibus autem quibusdam et.
 

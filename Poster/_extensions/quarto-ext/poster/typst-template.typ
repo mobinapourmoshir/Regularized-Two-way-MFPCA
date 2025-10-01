@@ -85,7 +85,7 @@
   set page(
     width: width,
     height: height,
-    margin: 
+    margin:
       (top: 1in, left: 2in, right: 2in, bottom: 2in),
     footer: [
       #set align(center)
@@ -96,10 +96,10 @@
         inset: 20pt,
         radius: 10pt,
         [
-          #text(font: "Courier", size: footer_url_font_size, footer_url) 
-          #h(1fr) 
-          #text(size: footer_text_font_size, smallcaps(footer_text)) 
-          #h(1fr) 
+          #text(font: "Courier", size: footer_url_font_size, footer_url)
+          #h(1fr)
+          #text(size: footer_text_font_size, smallcaps(footer_text))
+          #h(1fr)
           #text(font: "Courier", size: footer_url_font_size, footer_email_ids)
         ]
       )
@@ -162,15 +162,23 @@
   // Arranging the logo, title, authors, and department in the header.
   align(center,
     grid(
-      rows: 2,
-      columns: (univ_logo_column_size, title_column_size),
-      column-gutter: 0pt,
-      row-gutter: 50pt,
-      image(univ_logo, width: univ_logo_scale),
-      text(title_font_size, title + "\n\n") + 
-      text(authors_font_size, emph(authors) + 
-          "   (" + departments + ") "),
-    )
+  rows: 2,
+  columns: (univ_logo_column_size, title_column_size),
+  column-gutter: 0pt,
+  row-gutter: 50pt,
+
+  // University logo (scaled explicitly)
+  image(univ_logo, width: 4in),
+
+  // Title and author info (multi-line)
+  block(
+    text(title_font_size, title + "\n\n") +
+    text(authors_font_size, emph(authors) + "\n") +
+    text(authors_font_size, "Marquette University\n") +
+    text(authors_font_size, "Department of Mathematical and Statistical Sciences")
+  )
+)
+
   )
 
   // Start three column mode and configure paragraph properties.
