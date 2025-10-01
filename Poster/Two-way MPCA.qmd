@@ -10,78 +10,80 @@ format:
     footer-url: "https://github.com/mobinapourmoshir/ReMPCA"
     footer-emails: "mobina.pourmoshir@marquette.edu"
     footer-color: "ebcfb2"
-bibliography: refs.bib
-csl: apa.csl 
+bibliography: ref.bib
+csl: apa.csl
+citeproc: true
 ---
 
 # Background
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur. Quod idem licet transferre in voluptatem, ut postea variari voluptas distinguique possit, augeri amplificarique non possit. At etiam Athenis, ut e patre audiebam facete et urbane Stoicos irridente, statua est in quo a nobis philosophia defensa et collaudata est, cum id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, om- nis dolor repellendus. Temporibus autem quibusdam et.
+- **Functional data are ubiquitous.**  
+  Modern sensors yield curves, images, and surfaces observed over time/space.  
+  Functional PCA (FPCA) summarizes such data with a few principal functions for interpretation and modeling [@ramsay2005functional].
+
+- **Extensions exist but are isolated.**
+  - *Smoothed FPCA*: roughness penalties produce smoother, less noisy components [@silverman1996smoothed; @huang2008functional].
+  - *Sparse FPCA*: sparsity zeros out unimportant regions, improving interpretability [@huang2008sparse; @SparsePCA2020].
+  - *Multivariate FPCA (MFPCA)*: captures shared variation across multiple functional variables [@Happ_2018].
+  - *Two-way functional data* (e.g., time × space): require structure in *both* domains.
+
+- **Limitations.**  
+  Classical FPCA is noise-sensitive and can yield rough, dense patterns; many methods address *either* smoothness *or* sparsity, or are limited to univariate data.
+
+- **Motivation.**  
+  Develop a regularized FPCA framework that (i) handles **multivariate** and **two-way** functional structures,  
+  (ii) imposes **smoothness** (noise reduction) and **sparsity** (feature selection) *simultaneously* on scores and loadings,  
+  and (iii) yields low-rank, interpretable, and stable components.  
+  Recent work (e.g., ReMFPCA) points in this direction but leaves room for a unified treatment and broader applicability [@haghbin2023regMFPCA].
 
 
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur. Quod idem licet transferre in voluptatem, ut postea variari voluptas distinguique possit, augeri amplificarique non pos- sit. At.
+# Methodology
+### Multivariate FPCA Formulation
 
-# Lorem ipsum
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri.
-
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur. Quod idem licet transferre in voluptatem, ut.
-
-| Lorem ipsum dolor sit. | Lorem ipsum. | Lorem ipsum. |
-|------------------------|--------------|--------------|
-| Lorem ipsum dolor.     | Lorem ipsum. | $\alpha$     |
-| Lorem ipsum.           | Lorem ipsum. | $\beta$      |
-| Lorem.                 | Lorem.       | $\gamma$     |
-| Lorem ipsum dolor.     | Lorem.       | $\theta$     |
-
-: Lorem ipsum dolor sit amet {#tbl-1}
-
-Lorem @tbl-1 ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur. Quod idem licet transferre in voluptatem, ut postea variari voluptas distinguique possit, augeri amplificarique non possit. At etiam Athenis, ut e patre audiebam facete et urbane Stoicos irridente, statua est in quo a nobis philosophia defensa et.
-
-## Lorem ipsum dolor sit amet
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur. Quod idem licet transferre in voluptatem, ut postea variari voluptas distinguique possit, augeri amplificarique non possit. At etiam Athenis, ut e patre.
-
-
-
-# Lorem ipsum dolor.
-
-::: {.block fill="luma(230)" inset="8pt" radius="4pt"}
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur. Quod idem licet transferre in voluptatem, ut postea variari voluptas distinguique possit, augeri amplifi- carique non possit. At etiam Athenis, ut e patre audiebam facete et urbane Stoicos irridente, statua est in quo a nobis philosophia defensa et.
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-
-:::
-
-## Lorem ipsum etiam
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur. 
-
-## Lorem ipsum possimus
-
-Quod idem licet transferre in voluptatem, ut postea variari voluptas distinguique possit, augeri amplificarique non possit. At etiam Athenis, ut e patre audiebam facete et urbane Stoicos irridente, statua est in quo a nobis philosophia defensa et collaudata est, cum id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, om- nis dolor repellendus. Temporibus autem quibusdam et.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur. 
-
-
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur. Quod idem licet transferre in voluptatem, ut postea variari voluptas distinguique possit, augeri amplificarique non possit. At etiam Athenis, ut e patre audiebam facete et urbane Stoicos irridente, statua est in quo a nobis philosophia defensa et collaudata est, cum id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, om- nis dolor repellendus. Temporibus autem quibusdam et.
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-  - Lorem ipsum dolor sit amet.
-  -  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
-  - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed. 
-  - Lorem ipsum dolor sit amet, consectetur adipiscing.
+Concatenate $p$ functional variables into $\mathbf{X}\in\mathbb{R}^{n\times M}$, where $M = \sum_{i=1}^p m_i$.  
+We estimate a rank-one structure with penalties:
 
 $$
-\sum_(k=1)^n k = \frac{(n(n+1))}{2} = \frac{(n^2 + n)}{2}
+\min_{u,v}\;\|\mathbf{X}-uv^\top\|_F^2
++ \alpha\, v^\top \boldsymbol{\Omega} v
++ p_\gamma(v),
 $$
+
+where $\boldsymbol{\Omega} = \mathrm{diag}(\Omega_1,\ldots,\Omega_p)$ encodes **roughness** and $p_\gamma(\cdot)$ induces **sparsity** (soft, hard, or SCAD) [@huang2008functional; @huang2008sparse; @SparsePCA2020].
+
+
+### Sequential Power Algorithm
+
+Let $S(\alpha) = (I + \alpha \boldsymbol{\Omega})^{-1}$. Iterate:
+
+1. **Initialize:** $v$ via rank-one SVD of $\mathbf{X}$.
+2. **Repeat:**  
+   - $u \leftarrow \mathbf{X}v$  
+   - $v \leftarrow S(\alpha)\,h_\gamma(\mathbf{X}^\top u)$  
+   - $v \leftarrow v / \|v\|$
+3. **Deflate:** $\mathbf{X} \leftarrow \mathbf{X} - \sigma uv^\top$ to extract additional components.
+
+**Tuning:**  
+Choose $\gamma$ by $K$-fold cross-validation.  
+Choose $\alpha$ by generalized cross-validation (GCV):
+
+$$
+\mathrm{GCV}(\alpha)
+= \frac{\| (I - S(\alpha))(\mathbf{X}^\top u)\|^2 / M}
+{ \left( 1 - \tfrac{1}{M} \operatorname{tr} S(\alpha) \right)^2 }.
+$$
+
+
+# Two-way Extension
+
+
+
+
+
+
+# References
+```{=typst}
+#set text(size: 12pt)
+```
+
