@@ -121,9 +121,12 @@ Choose $\alpha$ by generalized cross-validation (GCV): $\mathrm{GCV}(\alpha) = \
 - **Methodology:** Penalized SVD with roughness and sparsity penalties applies regularization to both scores ($u$) and loadings ($v$), tuned via GCV and CV.
 - **Results:** Two-way regularization improves reconstruction and interpretability, outperforming one-way methods across simulated and real datasets.
 - **Software:** Implemented in the ReMPCA R package with automated tuning, diagnostics, and visualization tools.
-- **Future Work:** Extend to hybrid scalar–functional–image data, nonlinear kernels, and applications in neuroimaging, medicine, and environmental science.
+- **Future Work:**
+  - Hybrid data integration: joint analysis of scalar, functional, and imaging data.
+  - Advanced models: kernel FPCA and neural-network-based nonlinear extensions.
+  - Applications: neuroimaging, personalized medicine, and environmental monitoring.
   
-![Hybrid data example](./images/poster_panel.png){width="98%"}
+![Hybrid data example](./images/poster_panel.png){width="100%"}
 
 # References
 ```{=typst}

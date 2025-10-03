@@ -52,10 +52,10 @@
   title_column_size: "20",
 
   // Poster title's font size (in pt).
-  title_font_size: "48",
+  title_font_size: "38",
 
   // Authors' font size (in pt).
-  authors_font_size: "30",
+  authors_font_size: "25",
 
   // Footer's URL and email font size (in pt).
   footer_url_font_size: "30",
