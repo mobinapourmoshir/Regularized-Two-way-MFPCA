@@ -6,7 +6,7 @@ format:
     poster-authors: "Mobina Pourmoshir, Dr. Mehdi Maadooliat"
     departments: "Department of Mathematical and Statistical Sciences"
     institution-logo: "./images/MU.png"
-    footer-text: "CSSRFP 2025"
+    footer-text: "Marquette University"
     footer-url: "https://github.com/mobinapourmoshir/ReMPCA"
     footer-emails: "mobina.pourmoshir@marquette.edu"
     footer-color: "ebcfb2"
@@ -31,10 +31,7 @@ citeproc: true
   Classical FPCA is noise-sensitive and can yield rough, dense patterns; many methods address *either* smoothness *or* sparsity, or are limited to univariate data.
 
 - **Motivation.**  
-  Develop a regularized FPCA framework that (i) handles **multivariate** and **two-way** functional structures,  
-  (ii) imposes **smoothness** (noise reduction) and **sparsity** (feature selection) *simultaneously* on scores and loadings,  
-  and (iii) yields low-rank, interpretable, and stable components.  
-  Recent work (e.g., ReMFPCA) points in this direction but leaves room for a unified treatment and broader applicability [@haghbin2023regMFPCA].
+  Develop a regularized FPCA framework that (i) handles **multivariate** and **two-way** functional structures,  (ii) imposes **smoothness** (noise reduction) and **sparsity** (feature selection) *simultaneously* on scores and loadings,  and (iii) yields low-rank, interpretable, and stable components.  Recent work (e.g., ReMFPCA) points in this direction but leaves room for a unified treatment and broader applicability [@haghbin2023regMFPCA].
 
 
 
@@ -62,17 +59,10 @@ Let $S(\alpha) = (I + \alpha \boldsymbol{\Omega})^{-1}$. Iterate:
    - $u \leftarrow \mathbf{X}v$  
    - $v \leftarrow S(\alpha)\,h_\gamma(\mathbf{X}^\top u)$  
    - $v \leftarrow v / \|v\|$
-3. **Deflate:** $\mathbf{X} \leftarrow \mathbf{X} - \sigma uv^\top$ to extract additional components.
 
 **Tuning:**  
 Choose $\gamma$ by $K$-fold cross-validation.  
-Choose $\alpha$ by generalized cross-validation (GCV):
-
-$$
-\mathrm{GCV}(\alpha)
-= \frac{\| (I - S(\alpha))(\mathbf{X}^\top u)\|^2 / M}
-{ \left( 1 - \tfrac{1}{M} \operatorname{tr} S(\alpha) \right)^2 }.
-$$
+Choose $\alpha$ by generalized cross-validation (GCV): $\mathrm{GCV}(\alpha) = \frac{\| (I - S(\alpha))(\mathbf{X}^\top u)\|^2 / M}{ \left( 1 - \tfrac{1}{M} \operatorname{tr} S(\alpha) \right)^2}.$
 
 
 
@@ -100,13 +90,9 @@ $$
   4. Normalize $v$ and deflate $\mathbf{X}$ to extract further components.
 
 - **Tuning:**  
-    - $\alpha_u$, $\boldsymbol{\alpha}_v$ → control **smoothness** of scores and loadings.  
-    - $\gamma_u$, $\boldsymbol{\gamma}_v$ → control **sparsity** of scores and loadings.
-  - **Strategy (Conditional Tuning):**  
-    1. Initialize with no penalties.  
-    2. Use **cross-validation (CV)** to tune sparsity parameters.  
-    3. Use **generalized cross-validation (GCV)** to tune smoothness parameters.  
-    4. Alternate steps 2–3 until convergence for an optimal balance of smoothness and sparsity.
+  - $\alpha_u$, $\boldsymbol{\alpha}_v$ → control **smoothness** of scores and loadings. 
+  - $\gamma_u$, $\boldsymbol{\gamma}_v$ → control **sparsity** of scores and loadings.
+  - Conditional tuning alternates CV for sparsity and GCV for smoothness to achieve an optimal balance.
 
 
 
@@ -135,13 +121,12 @@ $$
 - **Methodology:** Penalized SVD with roughness and sparsity penalties applies regularization to both scores ($u$) and loadings ($v$), tuned via GCV and CV.
 - **Results:** Two-way regularization improves reconstruction and interpretability, outperforming one-way methods across simulated and real datasets.
 - **Software:** Implemented in the ReMPCA R package with automated tuning, diagnostics, and visualization tools.
-- **Future Work:** 
-  - Hybrid data integration: joint analysis of scalar, functional, and imaging data.
-  - Advanced models: kernel FPCA and neural-network-based nonlinear extensions.
-  - Applications: neuroimaging, personalized medicine, and environmental monitoring.
+- **Future Work:** Extend to hybrid scalar–functional–image data, nonlinear kernels, and applications in neuroimaging, medicine, and environmental science.
+  
+![Hybrid data example](./images/poster_panel.png){width="98%"}
 
 # References
 ```{=typst}
-#set text(size: 12pt)
+#set text(size: 9pt)
 ```
 
