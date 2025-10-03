@@ -112,34 +112,33 @@ $$
 
 ```{=typst}
 #grid(
-  columns: 2,
-  gutter: 12pt,
+  columns: 4,
+  gutter: 2pt,  // reduce spacing between images
 
   // Row 1
-  block(image("images/True.jpg", width: 3.2in) + text(10pt, "\nTrue")),
-  block(image("images/NoisyChessboard.jpg", width: 3.2in) + text(10pt, "\nNoisy")),
+  image("images/True.jpg", width: 2.5in),
+  image("images/svd_Reconstructed.jpg", width: 2.5in),
+  image("images/Lasso_reconstructed.jpg", width: 2.5in),
+  image("images/u1plots.jpg", width: 2.5in),
 
   // Row 2
-  block(image("images/svd_Reconstructed.jpg", width: 3.2in) + text(10pt, "\nSVD reconstructed")),
-  block(image("images/smooth_reconstructed.jpg", width: 3.2in) + text(10pt, "\nSmoothed reconstructed")),
-
-  // Row 3
-  block(image("images/Lasso_reconstructed.jpg", width: 3.2in) + text(10pt, "\nGroup LASSO reconstructed")),
-
-  // U & V side-by-side in the right-bottom cell (nested grid)
-  block(
-    grid(
-      columns: 2,
-      gutter: 8pt,
-      image("images/u1plots.jpg", width: 3.05in),
-      image("images/v1plots.jpg", width: 3.05in),
-    )
-    + text(10pt, "\nScores (u)      Loadings (v)")
-  )
+  image("images/NoisyChessboard.jpg", width: 2.5in),
+  image("images/smooth_reconstructed.jpg", width: 2.5in),
+  image("images/pic.compress.jpg", width: 2.5in),
+  image("images/v1plots.jpg", width: 2.5in),
 )
 ```
 
 
+# Conclusion & Future Work
+- **Comprehensive Framework:** ReMPCA extends PCA to curves, images, and functional data, combining smoothness (denoising, interpretability) and sparsity (feature selection) for structured, low-rank components.
+- **Methodology:** Penalized SVD with roughness and sparsity penalties applies regularization to both scores ($u$) and loadings ($v$), tuned via GCV and CV.
+- **Results:** Two-way regularization improves reconstruction and interpretability, outperforming one-way methods across simulated and real datasets.
+- **Software:** Implemented in the ReMPCA R package with automated tuning, diagnostics, and visualization tools.
+- **Future Work:** 
+  - Hybrid data integration: joint analysis of scalar, functional, and imaging data.
+  - Advanced models: kernel FPCA and neural-network-based nonlinear extensions.
+  - Applications: neuroimaging, personalized medicine, and environmental monitoring.
 
 # References
 ```{=typst}
