@@ -22,23 +22,34 @@ citeproc: true
   Functional PCA (FPCA) summarizes such data with a few principal functions for interpretation and modeling [@ramsay2005functional].
 
 - **Extensions exist but are isolated.**
-  - *Smoothed FPCA*: roughness penalties produce smoother, less noisy components [@silverman1996smoothed; @huang2008functional].
-  - *Sparse FPCA*: sparsity zeros out unimportant regions, improving interpretability [@huang2008sparse; @SparsePCA2020].
-  - *Multivariate FPCA (MFPCA)*: captures shared variation across multiple functional variables [@Happ_2018].
-  - *Two-way functional data* (e.g., time × space): require structure in *both* domains.
+  - *Smoothed FPCA*: Smoother components [@huang2008functional].
+  - *Sparse FPCA*: Improving interpretability [@huang2008sparse; @SparsePCA2020].
+  - *Multivariate FPCA (MFPCA)*: Multiple functional variables [@Happ_2018].
+  - *Two-way functional data*: require structure in *both* domains.
 
 - **Limitations.**  
   Classical FPCA is noise-sensitive and can yield rough, dense patterns; many methods address *either* smoothness *or* sparsity, or are limited to univariate data.
 
 - **Motivation.**  
-  Develop a regularized FPCA framework that (i) handles **multivariate** and **two-way** functional structures,  (ii) imposes **smoothness** (noise reduction) and **sparsity** (feature selection) *simultaneously* on scores and loadings,  and (iii) yields low-rank, interpretable, and stable components.  Recent work (e.g., ReMFPCA) points in this direction but leaves room for a unified treatment and broader applicability [@haghbin2023regMFPCA].
+  Develop a regularized FPCA framework that (i) handles **multivariate** and **two-way** functional structures,  (ii) imposes **smoothness** (noise reduction) and **sparsity** (feature selection) *simultaneously* on scores and loadings,  and (iii) yields low-rank, interpretable, and stable components.  Recent work points in this direction but leaves room for a unified treatment and broader applicability [@haghbin2023regMFPCA].
 
 
 
 # Methodology
-### Multivariate FPCA Formulation
+### Multivariate FPCA
 
-Concatenate $p$ functional variables into $\mathbf{X}\in\mathbb{R}^{n\times M}$, where $M = \sum_{i=1}^p m_i$.  
+Concatenate $p$ functional variables, where the $i$-th variable is observed on $m_i$ grid points, into $\mathbf{X} = \big[\,{X_1}\quad X_2 \; \cdots \; {X_p}\,\big] \in\mathbb{R}^{n\times M}$, where $M = \sum_{i=1}^p m_i$:
+
+$$
+\mathbf{X} =
+\begin{bmatrix}
+{x_{11}(t_{11})} & {\cdots} & {x_{11}(t_{1m_1})} & \cdots & {x_{1p}(t_{p1})} & {\cdots} & {x_{1p}(t_{p m_p})} \\
+{\vdots} & {\ddots} & {\vdots} & \ddots & {\vdots} & {\ddots} & {\vdots} \\
+{x_{n1}(t_{11})} & {\cdots} & {x_{n1}(t_{1m_1})} & \cdots & {x_{np}(t_{p1})} & {\cdots} & {x_{np}(t_{p m_p})}
+\end{bmatrix}
+$$
+
+
 We estimate a rank-one structure with penalties:
 
 $$
@@ -129,17 +140,16 @@ Choose $\alpha$ by generalized cross-validation (GCV): $\mathrm{GCV}(\alpha) = \
 ```{=typst}
 #grid(
   columns: 2,
-  gutter: 6pt, // adjust spacing between columns
+  gutter: 1in, // increase this for a bigger horizontal gap
+  row-gutter: 0pt, // optional: remove vertical gaps
 
-  // Column 1: Functional
-  image("images/funcTrue.svg", width: 5.5in),
-  image("images/RegTrue.svg", width: 5.5in),
-  image("images/funcReco.svg", width: 5.5in),
+  image("images/funcTrue.svg", width: 5in),
+  image("images/RegTrue.svg", width: 5in),
+  image("images/funcNoisy.svg", width: 5in),
 
-  // Column 2: Regular
-  image("images/RegNoisy.svg", width: 5.5in),
-  image("images/funcNoisy.svg", width: 5.5in),
-  image("images/RegReco.svg", width: 5.5in),
+  image("images/RegNoisy.svg", width: 5in),
+  image("images/funcReco.svg", width: 5in),
+  image("images/RegReco.svg", width: 5in),
 )
 ```
 
