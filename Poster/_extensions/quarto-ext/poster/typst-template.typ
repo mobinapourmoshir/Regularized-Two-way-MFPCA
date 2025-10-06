@@ -46,7 +46,7 @@
   univ_logo_scale: "100",
 
   // University logo's column size (in in).
-  univ_logo_column_size: "10",
+  univ_logo_column_size: "0",
 
   // Title and authors' column size (in in).
   title_column_size: "20",
@@ -58,10 +58,10 @@
   authors_font_size: "25",
 
   // Footer's URL and email font size (in pt).
-  footer_url_font_size: "30",
+  footer_url_font_size: "20",
 
   // Footer's text font size (in pt).
-  footer_text_font_size: "40",
+  footer_text_font_size: "20",
 
   // The poster's content.
   body
@@ -91,7 +91,7 @@
       #set align(center)
       #set text(32pt)
       #block(
-        fill: rgb(footer_color),
+        fill: rgb("#d3d3d3"),
         width: 100%,
         inset: 20pt,
         radius: 10pt,
@@ -164,11 +164,11 @@
     grid(
   rows: 2,
   columns: (univ_logo_column_size, title_column_size),
-  column-gutter: 0pt,
-  row-gutter: 50pt,
+  column-gutter: -30pt,
+  row-gutter: 20pt,
 
   // University logo (scaled explicitly)
-  image(univ_logo, width: 3.5in),
+  place(dx: -4.5in, dy: -0.7in, image(univ_logo, width: 3in)),
 
   // Title and author info (multi-line)
   block(

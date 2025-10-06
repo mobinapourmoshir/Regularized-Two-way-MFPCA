@@ -22,21 +22,21 @@ citeproc: true
   Functional PCA (FPCA) summarizes such data with a few principal functions for interpretation and modeling [@ramsay2005functional].
 
 - **Extensions exist but are isolated.**
-  - *Smoothed FPCA*: Smoother components [@huang2008functional].
-  - *Sparse FPCA*: Improving interpretability [@huang2008sparse; @SparsePCA2020].
-  - *Multivariate FPCA (MFPCA)*: Multiple functional variables [@Happ_2018].
-  - *Two-way functional data*: require structure in *both* domains.
+  - *<span style="color:#b30000;">Smoothed</span> FPCA*: roughness penalties produce smoother, less noisy components [@silverman1996smoothed; @huang2008functional].
+  - *<span style="color:#0033cc;">Sparse</span> FPCA*: sparsity zeros out unimportant regions, improving interpretability [@huang2008sparse; @SparsePCA2020].
+  - *Multivariate FPCA (MFPCA)*: captures shared variation across multiple functional variables [@Happ_2018].
+  - *Two-way functional data* (e.g., time × space): require structure in both domains.
 
 - **Limitations.**  
-  Classical FPCA is noise-sensitive and can yield rough, dense patterns; many methods address *either* smoothness *or* sparsity, or are limited to univariate data.
+  Classical FPCA is noise-sensitive and can yield rough, dense patterns; many methods address either <span style="color:#b30000;">smoothness</span> or <span style="color:#0033cc;">sparsity</span> , or are limited to univariate data.
 
 - **Motivation.**  
-  Develop a regularized FPCA framework that (i) handles **multivariate** and **two-way** functional structures,  (ii) imposes **smoothness** (noise reduction) and **sparsity** (feature selection) *simultaneously* on scores and loadings,  and (iii) yields low-rank, interpretable, and stable components.  Recent work points in this direction but leaves room for a unified treatment and broader applicability [@haghbin2023regMFPCA].
+  Develop a regularized FPCA framework that (i) handles **multivariate** and **two-way** functional structures,  (ii) imposes **<span style="color:#b30000;">smoothness</span>** (noise reduction) and **<span style="color:#0033cc;">sparsity</span>** (feature selection) *simultaneously* on scores and loadings,  and (iii) yields low-rank, interpretable, and stable components.  Recent work points in this direction but leaves room for a unified treatment and broader applicability [@haghbin2023regMFPCA].
 
 
 
 # Methodology
-### Multivariate FPCA
+### **Multivariate FPCA**
 
 Concatenate $p$ functional variables, where the $i$-th variable is observed on $m_i$ grid points, into $\mathbf{X} = \big[\,{X_1}\quad X_2 \; \cdots \; {X_p}\,\big] \in\mathbb{R}^{n\times M}$, where $M = \sum_{i=1}^p m_i$:
 
@@ -58,10 +58,10 @@ $$
 + p_\gamma(v),
 $$
 
-where $\boldsymbol{\Omega} = \mathrm{diag}(\Omega_1,\ldots,\Omega_p)$ encodes **roughness** and $p_\gamma(\cdot)$ induces **sparsity** (soft, hard, or SCAD) [@huang2008functional; @huang2008sparse; @SparsePCA2020].
+where $\boldsymbol{\Omega} = \mathrm{diag}(\Omega_1,\ldots,\Omega_p)$ encodes **<span style="color:#b30000;">roughness</span>** and $p_\gamma(\cdot)$ induces **<span style="color:#0033cc;">sparsity</span>** (soft, hard, or SCAD) [@huang2008functional; @huang2008sparse; @SparsePCA2020].
 
 
-### Sequential Power Algorithm
+### **Sequential Power Algorithm**
 
 Let $S(\alpha) = (I + \alpha \boldsymbol{\Omega})^{-1}$. Iterate:
 
@@ -88,8 +88,7 @@ Choose $\alpha$ by generalized cross-validation (GCV): $\mathrm{GCV}(\alpha) = \
   \min_{u,v} \|\pmb X - uv^\top\|_F^2 + 
     \sum_j^J \mathcal P_j^{[\theta]}(u,v)
   $$
-- where $J$ is the number of penalty components, and $\theta$ is the vector of all tuning parameters. The composite penalty $\sum_{j=1}^J \mathcal{P}_j^{(\theta)}(u,v)$ lets us mix regularizers, e.g., smoothness with $\theta=(\alpha_u,\boldsymbol{\alpha}_v)$ and sparsity with $\theta=(\gamma_u,\boldsymbol{\gamma}_v)$ (controlling sparsity), and can include other structures as needed.
-
+- where $J$ is the number of penalty components, and $\theta$ is the vector of all tuning parameters. The composite penalty $\sum_{j=1}^J \mathcal{P}_j^{(\theta)}(u,v)$ lets us mix regularizers, e.g., <span style="color:#b30000;">smoothness</span> with $\theta=(\alpha_u,\boldsymbol{\alpha}_v)$ and <span style="color:#0033cc;">sparsity</span> with $\theta=(\gamma_u,\boldsymbol{\gamma}_v)$ (controlling sparsity), and can include other structures as needed.
 
 
 - **Sequential Power Algorithm:**  
@@ -100,10 +99,11 @@ Choose $\alpha$ by generalized cross-validation (GCV): $\mathrm{GCV}(\alpha) = \
      $v \leftarrow S_v^{[\boldsymbol{\alpha}_v]} h_v^{[\boldsymbol{\gamma}_v]}(\mathbf{X}^\top u)$  
   4. Normalize $v$ and deflate $\mathbf{X}$ to extract further components.
 
+
 - **Tuning:**  
-  - $\alpha_u$, $\boldsymbol{\alpha}_v$ → control **smoothness** of scores and loadings. 
-  - $\gamma_u$, $\boldsymbol{\gamma}_v$ → control **sparsity** of scores and loadings.
-  - Conditional tuning alternates CV for sparsity and GCV for smoothness to achieve an optimal balance.
+  - $\alpha_u$, $\boldsymbol{\alpha}_v$ → control **<span style="color:#b30000;">smoothness</span>** of scores and loadings. 
+  - $\gamma_u$, $\boldsymbol{\gamma}_v$ → control **<span style="color:#0033cc;">sparsity</span>** of scores and loadings.
+  - Conditional tuning alternates CV for <span style="color:#0033cc;">sparsity</span> and GCV for <span style="color:#b30000;">smoothness</span> to achieve an optimal balance.
 
 
 
@@ -127,9 +127,16 @@ Choose $\alpha$ by generalized cross-validation (GCV): $\mathrm{GCV}(\alpha) = \
 ```
 
 
-# Conclusion & Future Work
+<div style="height: 30px;"></div>
+<div style="height: 30px;"></div>
+<div style="height: 30px;"></div>
+<div style="height: 30px;"></div>
+<div style="height: 30px;"></div>
+
+
+# Conclusion 
 - **Comprehensive Framework:** ReMPCA extends PCA to curves, images, and functional data, combining smoothness (denoising, interpretability) and sparsity (feature selection) for structured, low-rank components.
-- **Methodology:** Penalized SVD with roughness and sparsity penalties applies regularization to both scores ($u$) and loadings ($v$), tuned via GCV and CV.
+- **Methodology:** Penalized SVD with <span style="color:#b30000;">roughness</span> and <span style="color:#0033cc;">sparsity</span> penalties applies regularization to both scores ($u$) and loadings ($v$), tuned via GCV and CV.
 - **Results:** Two-way regularization improves reconstruction and interpretability, outperforming one-way methods across simulated and real datasets.
 - **Software:** Implemented in the ReMPCA R package with automated tuning, diagnostics, and visualization tools.
 - **Future Work:**
