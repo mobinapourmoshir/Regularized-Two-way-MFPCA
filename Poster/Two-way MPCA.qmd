@@ -126,7 +126,22 @@ Choose $\alpha$ by generalized cross-validation (GCV): $\mathrm{GCV}(\alpha) = \
   - Advanced models: kernel FPCA and neural-network-based nonlinear extensions.
   - Applications: neuroimaging, personalized medicine, and environmental monitoring.
   
-![Hybrid data example](./images/poster_panel.png){width="100%"}
+```{=typst}
+#grid(
+  columns: 2,
+  gutter: 6pt, // adjust spacing between columns
+
+  // Column 1: Functional
+  image("images/funcTrue.svg", width: 5.5in),
+  image("images/RegTrue.svg", width: 5.5in),
+  image("images/funcReco.svg", width: 5.5in),
+
+  // Column 2: Regular
+  image("images/RegNoisy.svg", width: 5.5in),
+  image("images/funcNoisy.svg", width: 5.5in),
+  image("images/RegReco.svg", width: 5.5in),
+)
+```
 
 # References
 ```{=typst}
