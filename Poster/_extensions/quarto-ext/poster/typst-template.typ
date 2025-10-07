@@ -168,7 +168,7 @@
   row-gutter: 20pt,
 
   // University logo (scaled explicitly)
-  place(dx: -4.5in, dy: -0.7in, image(univ_logo, width: 3in)),
+  place(dx: -4.5in, dy: -0.5in, image(univ_logo, width: 3.7in)),
 
   // Title and author info (multi-line)
   block(

@@ -5,7 +5,7 @@ format:
     size: "36x24"
     poster-authors: "Mobina Pourmoshir, Dr. Mehdi Maadooliat"
     departments: "Department of Mathematical and Statistical Sciences"
-    institution-logo: "./images/MU.png"
+    institution-logo: "./images/MU.jpg"
     footer-text: "Marquette University"
     footer-url: "https://github.com/mobinapourmoshir/ReMPCA"
     footer-emails: "mobina.pourmoshir@marquette.edu"
