@@ -54,7 +54,7 @@ We estimate a rank-one structure with penalties:
 
 $$
 \min_{u,v}\;\|\mathbf{X}-uv^\top\|_F^2
-+ \alpha\, v^\top \boldsymbol{\Omega} v
++ \alpha\, u^\top u v^\top \boldsymbol{\Omega} v
 + p_\gamma(v),
 $$
 
@@ -73,7 +73,7 @@ Let $S(\alpha) = (I + \alpha \boldsymbol{\Omega})^{-1}$. Iterate:
 
 **Tuning:**  
 Choose $\gamma$ by $K$-fold cross-validation.  
-Choose $\alpha$ by generalized cross-validation (GCV): $\mathrm{GCV}(\alpha) = \frac{\| (I - S(\alpha))(\mathbf{X}^\top u)\|^2 / M}{ \left( 1 - \tfrac{1}{M} \operatorname{tr} S(\alpha) \right)^2}.$
+Choose $\alpha$ by generalized cross-validation: $\mathrm{GCV}(\alpha) = \frac{\| (I - S(\alpha))(\mathbf{X}^\top u)\|^2 / M}{ \left( 1 - \tfrac{1}{M} \operatorname{tr} S(\alpha) \right)^2}.$
 
 
 
