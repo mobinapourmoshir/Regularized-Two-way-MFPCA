@@ -98,14 +98,17 @@ Choose $\alpha$ by generalized cross-validation (GCV): $\mathrm{GCV}(\alpha) = \
   3. Update $v$ similarly:  
      $v \leftarrow S_v^{[\boldsymbol{\alpha}_v]} h_v^{[\boldsymbol{\gamma}_v]}(\mathbf{X}^\top u)$  
   4. Normalize $v$ and deflate $\mathbf{X}$ to extract further components.
+  
+- **Tuning parameters:**  
+  - $\alpha_u$, $\boldsymbol{\alpha}_v$ → **<span style="color:#b30000;">smoothness</span>** of $u$ and $v$.  
+  - $\gamma_u$, $\boldsymbol{\gamma}_v$ → **<span style="color:#0033cc;">sparsity</span>** of $u$ and $v$.
+  - **Conditional tuning strategy:**  
+    1. Start with no penalties.  
+    2. Tune sparsity parameters via CV.  
+    3. Tune smoothness parameters via GCV.  
+    4. Alternate until convergence.
 
-
-- **Tuning:**  
-  - $\alpha_u$, $\boldsymbol{\alpha}_v$ → control **<span style="color:#b30000;">smoothness</span>** of scores and loadings. 
-  - $\gamma_u$, $\boldsymbol{\gamma}_v$ → control **<span style="color:#0033cc;">sparsity</span>** of scores and loadings.
-  - Conditional tuning alternates CV for <span style="color:#0033cc;">sparsity</span> and GCV for <span style="color:#b30000;">smoothness</span> to achieve an optimal balance.
-
-
+<div style="height: 30px;"></div>
 
 ```{=typst}
 #grid(
@@ -113,52 +116,43 @@ Choose $\alpha$ by generalized cross-validation (GCV): $\mathrm{GCV}(\alpha) = \
   gutter: 2pt,  // reduce spacing between images
 
   // Row 1
-  image("images/True.jpg", width: 2.5in),
-  image("images/svd_Reconstructed.jpg", width: 2.5in),
-  image("images/Lasso_reconstructed.jpg", width: 2.5in),
-  image("images/u1plots.jpg", width: 2.5in),
+  image("images/True.svg", width: 2.5in),
+  image("images/svd_Reconstructed.svg", width: 2.5in),
+  image("images/Lasso_reconstructed.svg", width: 2.5in),
+  image("images/u1plots.svg", width: 2.5in),
 
   // Row 2
-  image("images/NoisyChessboard.jpg", width: 2.5in),
-  image("images/smooth_reconstructed.jpg", width: 2.5in),
-  image("images/pic.compress.jpg", width: 2.5in),
-  image("images/v1plots.jpg", width: 2.5in),
+  image("images/NoisyChessboard.svg", width: 2.5in),
+  image("images/smooth_reconstructed.svg", width: 2.5in),
+  image("images/pic.compress.svg", width: 2.5in),
+  image("images/v1plots.svg", width: 2.5in),
 )
 ```
 
 
-<div style="height: 30px;"></div>
-<div style="height: 30px;"></div>
-<div style="height: 30px;"></div>
-<div style="height: 30px;"></div>
-<div style="height: 30px;"></div>
+
 
 
 # Conclusion 
-- **Comprehensive Framework:** ReMPCA extends PCA to curves, images, and functional data, combining smoothness (denoising, interpretability) and sparsity (feature selection) for structured, low-rank components.
+- **Comprehensive Framework:** ReMPCA extends PCA to functional data, combining smoothness (denoising) and sparsity (feature selection) for structured, low-rank PCs.
 - **Methodology:** Penalized SVD with <span style="color:#b30000;">roughness</span> and <span style="color:#0033cc;">sparsity</span> penalties applies regularization to both scores ($u$) and loadings ($v$), tuned via GCV and CV.
 - **Results:** Two-way regularization improves reconstruction and interpretability, outperforming one-way methods across simulated and real datasets.
-- **Software:** Implemented in the ReMPCA R package with automated tuning, diagnostics, and visualization tools.
-- **Future Work:**
-  - Hybrid data integration: joint analysis of scalar, functional, and imaging data.
-  - Advanced models: kernel FPCA and neural-network-based nonlinear extensions.
-  - Applications: neuroimaging, personalized medicine, and environmental monitoring.
+- **Software:** Implemented in the ReMPCA R package with tuning, and visualization tools.
+- **Future Work:** Extend to hybrid scalar–functional–image data, nonlinear kernels, and applications in neuroimaging, medicine, and environmental science.
   
+
 ```{=typst}
-#grid(
-  columns: 2,
-  gutter: 1in, // increase this for a bigger horizontal gap
-  row-gutter: 0pt, // optional: remove vertical gaps
-
-  image("images/funcTrue.svg", width: 5in),
-  image("images/RegTrue.svg", width: 5in),
-  image("images/funcNoisy.svg", width: 5in),
-
-  image("images/RegNoisy.svg", width: 5in),
-  image("images/funcReco.svg", width: 5in),
-  image("images/RegReco.svg", width: 5in),
+#align(center,
+  grid(
+    columns: 1,
+    row-gutter: 0pt,
+    image("images/plot1.svg", width: 9in),
+    image("images/plot2.svg", width: 9in),
+    image("images/plot3.svg", width: 9in),
+  )
 )
 ```
+
 
 # References
 ```{=typst}
