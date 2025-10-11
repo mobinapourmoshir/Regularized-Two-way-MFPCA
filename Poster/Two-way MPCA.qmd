@@ -38,14 +38,14 @@ citeproc: true
 # Methodology
 ### **Multivariate FPCA**
 
-Concatenate $p$ functional variables, where the $i$-th variable is observed on $m_i$ grid points, into $\mathbf{X} = \big[\,{X_1}\quad X_2 \; \cdots \; {X_p}\,\big] \in\mathbb{R}^{n\times M}$, where $M = \sum_{i=1}^p m_i$:
+Concatenate $p$ functional variables, where the $i$-th variable is observed on $m_i$ grid points, into $\mathbf{X} = \big[\,{X_1}\quad X_2 \quad \; \cdots \; \quad{X_p}\,\big] \in\mathbb{R}^{n\times M}$, where $M = \sum_{i=1}^p m_i$:
 
 $$
 \mathbf{X} =
 \begin{bmatrix}
-{x_{11}(t_{11})} & {\cdots} & {x_{11}(t_{1m_1})} & \cdots & {x_{1p}(t_{p1})} & {\cdots} & {x_{1p}(t_{p m_p})} \\
-{\vdots} & {\ddots} & {\vdots} & \ddots & {\vdots} & {\ddots} & {\vdots} \\
-{x_{n1}(t_{11})} & {\cdots} & {x_{n1}(t_{1m_1})} & \cdots & {x_{np}(t_{p1})} & {\cdots} & {x_{np}(t_{p m_p})}
+{x_{11}(t_{11})} & {\cdots} & {x_{11}(t_{1m_1})} & \qquad \cdots \qquad & {x_{1p}(t_{p1})} & {\cdots} & {x_{1p}(t_{p m_p})} \\
+{\vdots} & {\ddots} & {\vdots} & \qquad\ddots \qquad & {\vdots} &  {\ddots} & {\vdots} \\
+{x_{n1}(t_{11})} & {\cdots} & {x_{n1}(t_{1m_1})} & \qquad \cdots \qquad& {x_{np}(t_{p1})} & {\cdots} & {x_{np}(t_{p m_p})}
 \end{bmatrix}
 $$
 
