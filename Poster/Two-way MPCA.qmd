@@ -18,7 +18,7 @@ citeproc: true
 # Background
 
 - **Functional data are ubiquitous.**  
-  Modern sensors yield curves, images, and surfaces observed over time/space.  
+  Modern sensors yield curves, images, and surfaces observed over time or space.  
   Functional PCA (FPCA) summarizes such data with a few principal functions for interpretation and modeling [@ramsay2005functional].
 
 - **Extensions exist but are isolated.**
@@ -31,7 +31,7 @@ citeproc: true
   Classical FPCA is noise-sensitive and can yield rough, dense patterns; many methods address either <span style="color:#b30000;">smoothness</span> or <span style="color:#0033cc;">sparsity</span> , or are limited to univariate data.
 
 - **Motivation.**  
-  Develop a regularized FPCA framework that (i) handles **multivariate** and **two-way** functional structures,  (ii) imposes **<span style="color:#b30000;">smoothness</span>** (noise reduction) and **<span style="color:#0033cc;">sparsity</span>** (feature selection) *simultaneously* on scores and loadings,  and (iii) yields low-rank, interpretable, and stable components.  Recent work points in this direction but leaves room for a unified treatment and broader applicability [@haghbin2023regMFPCA].
+  Develop a regularized FPCA framework that (i) handles **multivariate** and **two-way** functional structures,  (ii) imposes **<span style="color:#b30000;">smoothness</span>** (noise reduction) and **<span style="color:#0033cc;">sparsity</span>** (feature selection) *simultaneously* on scores and loadings,  and (iii) yields low-rank, interpretable, and stable components.  Recent works point in this direction but leaves room for a unified framework and wider applicability [@haghbin2023regMFPCA].
 
 
 
@@ -53,27 +53,27 @@ $$
 We estimate a rank-one structure with penalties:
 
 $$
-\min_{u,v}\;\|\mathbf{X}-uv^\top\|_F^2
-+ \alpha\, u^\top u v^\top \boldsymbol{\Omega} v
-+ p_\gamma(v),
+\min_{u,v}\;\|\boldsymbol{X}-uv^\top\|_F^2
++ \boldsymbol{\alpha}\, u^\top u v^\top \boldsymbol{\Omega} v
++ \boldsymbol{p_\gamma}(v),
 $$
 
-where $\boldsymbol{\Omega} = \mathrm{diag}(\Omega_1,\ldots,\Omega_p)$ encodes **<span style="color:#b30000;">roughness</span>** and $p_\gamma(\cdot)$ induces **<span style="color:#0033cc;">sparsity</span>** (soft, hard, or SCAD) [@huang2008functional; @huang2008sparse; @SparsePCA2020].
+where $\boldsymbol{\Omega} = \mathrm{diag}(\Omega_1,\ldots,\Omega_p)$ encodes **<span style="color:#b30000;">roughness</span>** and $\boldsymbol{p_\gamma(\cdot)}$ induces **<span style="color:#0033cc;">sparsity</span>** (soft, hard, or SCAD) [@huang2008functional; @huang2008sparse; @SparsePCA2020].
 
 
 ### **Sequential Power Algorithm**
 
-Let $S(\alpha) = (I + \alpha \boldsymbol{\Omega})^{-1}$. Iterate:
+Let $S(\boldsymbol{\alpha}) = (I + \boldsymbol{\alpha} \boldsymbol{\Omega})^{-1}$. Iterate:
 
-1. **Initialize:** $v$ via rank-one SVD of $\mathbf{X}$.
+1. **Initialize:** $v$ via rank-one SVD of $\boldsymbol{X}$.
 2. **Repeat:**  
-   - $u \leftarrow \mathbf{X}v$  
-   - $v \leftarrow S(\alpha)\,h_\gamma(\mathbf{X}^\top u)$  
+   - $u \leftarrow \boldsymbol{X}v$  
+   - $v \leftarrow \boldsymbol{S(\alpha)}\,\boldsymbol{h_\gamma}(\boldsymbol{X}^\top u)$  
    - $v \leftarrow v / \|v\|$
 
 **Tuning:**  
-Choose $\gamma$ by $K$-fold cross-validation.  
-Choose $\alpha$ by generalized cross-validation: $\mathrm{GCV}(\alpha) = \frac{\| (I - S(\alpha))(\mathbf{X}^\top u)\|^2 / M}{ \left( 1 - \tfrac{1}{M} \operatorname{tr} S(\alpha) \right)^2}.$
+Choose $\boldsymbol{\gamma}$ (Degree of sparsity) by $K$-fold cross-validation.  
+Choose $\boldsymbol{\alpha}$ by generalized cross-validation: $\mathrm{GCV}(\boldsymbol{\alpha}) = \frac{\| (I - \boldsymbol{S(\alpha}))(\boldsymbol{X}^\top u)\|^2 / M}{ \left( 1 - \tfrac{1}{M} \operatorname{tr} \boldsymbol{S(\alpha)} \right)^2}.$
 
 
 
@@ -92,12 +92,12 @@ Choose $\alpha$ by generalized cross-validation: $\mathrm{GCV}(\alpha) = \frac{\
 
 
 - **Sequential Power Algorithm:**  
-  1. Initialize $u, v$ using rank-one SVD of $\mathbf{X}$.  
+  1. Initialize $u, v$ using rank-one SVD of $\boldsymbol{X}$.  
   2. Update $u$ with smoothing and sparsity transformations:  
-     $u \leftarrow S_u^{[\alpha_u]} h_u^{[\gamma_u]}(\mathbf{X}v)$  
+     $u \leftarrow S_u^{[\alpha_u]} h_u^{[\gamma_u]}(\boldsymbol{X}v)$  
   3. Update $v$ similarly:  
-     $v \leftarrow S_v^{[\boldsymbol{\alpha}_v]} h_v^{[\boldsymbol{\gamma}_v]}(\mathbf{X}^\top u)$  
-  4. Normalize $v$ and deflate $\mathbf{X}$ to extract further components.
+     $v \leftarrow \boldsymbol{S_v^{[\boldsymbol{\alpha}_v]} h_v^{[\boldsymbol{\gamma}_v]}}(\boldsymbol{X}^\top u)$  
+  4. Normalize $v$ and deflate $\boldsymbol{X}$ to extract further components.
   
 - **Tuning parameters:**  
   - $\alpha_u$, $\boldsymbol{\alpha}_v$ → **<span style="color:#b30000;">smoothness</span>** of $u$ and $v$.  
