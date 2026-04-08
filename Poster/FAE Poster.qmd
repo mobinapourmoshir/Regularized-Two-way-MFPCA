@@ -7,7 +7,7 @@ format:
     departments: "Department of Mathematical and Statistical Sciences"
     institution-logo: "./images/MU.jpg"
     footer-text: "Marquette University"
-    footer-url: "https://github.com/mobinapourmoshir/ReMPCA"
+    footer-url: "https://github.com/mobinapourmoshir/Functional-Autoencoder"
     footer-emails: "mobina.pourmoshir@marquette.edu"
     footer-color: "ebcfb2"
 bibliography: ref.bib
@@ -15,132 +15,92 @@ csl: apa.csl
 citeproc: true
 ---
 
+```{=typst}
+#set text(font: "Helvetica")
+```
+
 # Background
 
 - Functional data arise in many applications such as fertility rates, biomedical signals, and environmental measurements.
 
-- Classical approaches such as Functional Principal Component Analysis (FPCA) provide linear dimension reduction.
+- Classical approaches such as Functional Principal Component Analysis (FPCA) provide linear dimension reduction. However, FPCA cannot capture nonlinear structure. 
 
-- However, FPCA:
-  - cannot capture nonlinear structure  
-  - struggles with phase variation and deformation  
+- Goal: Develop a framework that: learns **nonlinear representations**, preserves **smoothness**, and supports **accurate forecasting**
 
-- **Goal:**  
-  Develop a framework that:
-  - learns **nonlinear representations**
-  - preserves **smoothness**
-  - supports **accurate forecasting**
 
----
+# Methodology: Functional Autoencoder
 
-# Methodology: Functional Autoencoder (FAE)
-
-We propose a **two-stage framework** combining representation learning and time-series modeling.
+We propose a two-stage framework that integrates representation learning with forecasting.
 
 ## Step 1: Representation Learning
 
 Let  
-\[
-{x}_t = (X_t(s_1), \dots, X_t(s_J))^\top
-\]
 
-- Encoder:
-\[
-{h}_t = E_\theta({x}_t)
-\]
+${x}_t = (X_t(s_1), \dots, X_t(s_J))^\top$
 
-- Decoder (basis expansion):
-\[
-\widehat{X}_t(s) = \sum_{m=1}^M \beta_{tm} \phi_m(s)
-\]
+- Encoder: ${h}_t = E_\theta({x}_t)$
 
-- Reconstruction:
-\[
-\widehat{{x}}_t = {\Phi}{C}{h}_t
-\]
+- Decoder (basis expansion): $\hat{X}_t(s) = \sum_{m=1}^M \beta_{tm} \phi_m(s)$
 
----
+- Reconstruction: $\hat{{x}}_t = {\Phi}{C}{h}_t$
+
+
 
 ## Penalized Objective
 
-\[
+$$
 \mathcal{L} =
 \frac{1}{T} \sum_{t=1}^T 
-\|{x}_t - \widehat{{x}}_t\|^2
+\|{x}_t - \hat{{x}}_t\|^2
 +
-\lambda \int \left( \frac{d^2}{ds^2}\widehat{X}_t(s) \right)^2 ds
-\]
+\lambda \int \left( \frac{d^2}{ds^2}\hat{X}_t(s) \right)^2 ds
+$$
 
-- Ensures:
-  - smoothness  
-  - noise reduction  
-  - stable representations  
+- Ensures: smoothness, noise reduction, and stable representations  
 
----
+
 
 ## Step 2: Latent Temporal Modeling
 
-Latent series:
-\[
-\{{h}_t\}_{t=1}^T
-\]
+Latent series: $\{{h}_t\}_{t=1}^T$
 
-Modeled via VAR:
-\[
-{h}_t = \sum_{i=1}^p A_i {h}_{t-i} + \varepsilon_t
-\]
+Modeled via VAR: ${h}_t = \sum_{i=1}^p A_i {h}_{t-i} + \varepsilon_t$
 
-Forecast:
-\[
-\widehat{{h}}_{T+1}, \dots, \widehat{{h}}_{T+L}
-\]
+Forecast: $\hat{{h}}_{T+1}, \dots, \hat{{h}}_{T+L}$
 
----
 
-## Step 3: Decode Forecasts
 
-\[
-\widehat{X}_{T+\ell}(s) = D_\theta(\widehat{{h}}_{T+\ell})
-\]
+## Step 3: Decode Forecasts $\hat{X}_{T+\ell}(s) = D_\theta(\hat{{h}}_{T+\ell})$
 
----
-
-# Proposed Framework (FAE-New)
-
-```{=typst}
-#align(center,
-  image("images/FAE-New.pdf", width: 10in)
-)
-```
 
 # Algorithm
 
+**Functional Autoencoders with Temporal Latent Dynamics**
 ```{=typst}
-#block(
-  inset: 10pt,
-  stroke: 1pt,
-  radius: 5pt,
-)[
-  *Functional Autoencoders with Temporal Latent Dynamics*
 
-  1. *Input:* Functional data $\{X_t(\cdot)\}_{t=1}^T$
+  1. *Input:* Functional data ${X_t(.)}_{t=1}^T$
 
   2. *Train Autoencoder*
-     - Encode: ${h}_t = E_\theta({x}_t)$  
-     - Decode: $\widehat{{x}}_t = D_\theta({h}_t)$  
-     - Minimize penalized reconstruction loss  
+     - Encode: $h_t = E_theta(x_t)$
+     - Decode: $hat(x)_t = D_theta(h_t)$
+     - Minimize penalized reconstruction loss
 
-  3. *Latent Modeling*
-     - Fit VAR model on $\{{h}_t\}$  
+  3. *Latent Modeling:* Fit VAR model on ${h_t}$
 
-  4. *Forecast*
-     - Compute $\widehat{{h}}_{T+1}, \dots, \widehat{{h}}_{T+L}$  
+  4. *Forecast* Compute $hat(h)_(T+1), dots, hat(h)_(T+L)$
 
-  5. *Decode Forecasts*
-     - $\widehat{X}_{T+\ell}(s) = D_\theta(\widehat{{h}}_{T+\ell})$
-]
+  5. *Decode Forecasts:* $hat(X)_(T+ell)(s) = D_theta(hat(h)_(T+ell))$
+
 ```
 
+
+# Proposed Framework
+
+```{=typst}
+#align(center,
+  image("images/FAE-New.svg", width: 10in)
+)
+```
 
 # Simulation Study
 
@@ -149,49 +109,29 @@ Forecast:
   inset: 8pt,
   radius: 5pt,
 )[
-  *Comparison Setup*
-
-  • FPCA + VAR (linear baseline)  
-  • FAE + VAR (proposed)
+  *Comparison Setup:* FPCA + VAR (linear baseline) and FAE + VAR (proposed)
 
   *Scenarios*
 
   • Linear setting → both methods perform similarly  
   • Nonlinear setting → includes warping, deformation, nonlinear dynamics  
 
-  *Key Finding*
-
-  • FAE captures nonlinear structure  
-  • FPCA struggles with phase variation
+  *Key Finding: * FAE captures nonlinear structure and FPCA struggles with phase variation
 ]
 ```
 
 # Real Data Application
 
 ## USA Fertility Data
+Age-specific fertility rates in the U.S. (1933–2023) are observed as smooth age curves with strong temporal dependence, making them well-suited for functional time series modeling.
 
-```{=typst} id="img_fertility"
+```{=typst}
 #align(center,
-  image("images/usafertility.pdf", width: 8in)
+  image("images/usafertility.svg", width: 8in)
 )
-#block(
-  inset: 8pt,
-  radius: 5pt,
-)[
-  *Dataset Description*
 
-  • Age-specific fertility rates in the United States  
-
-  • Time span: 1933–2023  
-
-  • Each year is represented as a smooth curve over age  
-
-  • Data exhibit strong temporal dependence and smooth structure  
-
-  • Suitable for functional time series modeling
-]
 ```
-### Forecasting Setup
+## Forecasting Setup
 
 
 ```{=typst}
@@ -199,27 +139,19 @@ Forecast:
   inset: 8pt,
   radius: 5pt,
 )[
-  *Training Period*  
-  • 1933–2018  
+  *Data Split: * Training period: 1933–2018. Testing period: 2019–2023  
 
-  *Testing Period*  
-  • 2019–2023  
+  *Forecasting Frameworks*
 
-  *Forecasting Pipelines*
+  • FPCA → VAR → Reconstruction (linear baseline)  
+  • FAE → VAR → Decode (proposed nonlinear approach)
 
-  • FPCA → VAR → Reconstruction  
-
-  • FAE → VAR → Decode (proposed)
-
-  *Goal*
-
-  • Compare linear vs nonlinear representations  
-  • Evaluate multi-step forecasting accuracy
+  *Objective: * Compare linear and nonlinear representations.
 ]
 ```
 
 
-### Forecasting Results
+## Forecasting Results
 
 ```{=typst}
 #align(center,
@@ -232,7 +164,7 @@ Forecast:
 
 ```{=typst}
 #align(center,
-  image("images/fertility_forecasts.pdf", width: 10in)
+  image("images/fertility_forecasts.svg", width: 10in)
 )
 ```
 
@@ -266,19 +198,15 @@ Forecast:
 
   • Significantly improves forecasting accuracy  
 
-  • Combines:
-    - Functional Data Analysis  
-    - Deep Learning  
-    - Time-Series Modeling  
+  • Combines: Functional Data Analysis, Deep Learning, and Time-Series Modeling  
 
-  • Applicable to:
-    - Biomedical data  
-    - Environmental data  
-    - Demographic studies  
+  • Applicable to: Biomedical data, Environmental data, and Demographic studies  
 ]
 ```
 
 # Reference 
-```{=typst}
-#set text(size: 9pt)
-```
+::: {#refs}
+[@Hyndman2007]
+[@FAE2021]
+[@2024cao]
+:::
