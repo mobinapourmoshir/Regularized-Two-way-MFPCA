@@ -1,0 +1,270 @@
+---
+title: AI-Driven Analytics for Energy-Efficient and Cost-Aware Data Center Planning
+format:
+  poster-typst: 
+    size: "36x24"
+    poster-authors: "Pouya Zolfi"
+    departments: "Department of Electrical and Computer Engineering"
+    institution-logo: "./images/MU.jpg"
+    footer-text: "Marquette University"
+    footer-url: "https://www.linkedin.com/in/pouyazolfi"
+    footer-emails: "pouya.zolfi@marquette.edu"
+    footer-color: "ebcfb2"
+bibliography: ref.bib
+csl: apa.csl
+citeproc: true
+---
+
+```{=typst}
+#set text(font: "Helvetica")
+```
+
+# Background
+
+- Data centers use substantial energy for computing and cooling.
+
+- Operators must balance workload demand, electricity cost, and carbon impact.
+
+- This study combines descriptive analytics and AI to support efficient and cost-aware data center planning.
+
+
+# Dataset Overview
+
+- The dataset includes hourly workload, electricity price, server parameters, and ADS cooling-system states.
+
+- These data support integrated analysis of:
+  - power demand
+  - operating cost
+  - carbon emissions
+  - cooling performance
+
+
+# Methodology
+
+We use a three-step framework.
+
+## Step 1: Operational Analytics
+
+Let
+
+$W_t = W_t^(int) + W_t^(batch)$
+
+denote hourly total workload.
+
+We analyze:
+
+- workload demand
+- electricity price
+- server requirement
+- IT and cooling power
+- total facility power
+- hourly electricity cost
+- hourly carbon emissions
+
+
+## Step 2: Cooling-System Modeling
+
+The adsorption cooling system (ADS) is modeled using:
+
+- inputs:
+  - generator temperature $T^(gen)$
+  - condenser temperature $T^(cond)$
+
+- outputs:
+  - coefficient of performance $COP$
+  - cooling capacity $q^(cap)$
+
+
+## Step 3: AI Surrogate Model
+
+We train a Random Forest multi-output model:
+
+$$
+(widehat(COP), widehat(q^(cap))) = f(T^(gen), T^(cond))
+$$
+
+to approximate the ADS operating map.
+
+
+# Key Equations
+
+$$
+Electricity Cost = Energy Consumption times Electricity Price
+$$
+
+$$
+$$
+
+$$
+Carbon Emissions = Energy Consumption times Carbon Intensity
+$$
+
+$$
+$$
+
+$$
+R^2 = 1 - frac(sum_i (y_i - hat(y)_i)^2, sum_i (y_i - bar(y))^2)
+$$
+
+
+# Workload and Electricity Price
+
+```{=typst}
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 8pt,
+  [
+    #align(center,
+      image("Data Center images/Figure_1_Hourly_Workload.svg", width: 6.6in)
+    )
+    
+    #align(center)[
+      *Figure 1.* Daily workload pattern.
+    ]
+  ],
+  [
+    #align(center,
+      image("Data Center images/Figure_2_Electricity_Price.svg", width: 6.6in)
+    )
+    
+    #align(center)[
+      *Figure 2.* Hourly electricity price.
+    ]
+  ]
+)
+```
+
+```{=typst}
+#block(
+  inset: 7pt,
+  radius: 5pt,
+)[
+  *Key Insight:* Workload and price peaks do not fully align, creating opportunities for cost-aware scheduling of flexible demand.
+]
+```
+
+# Power, Cost, and Carbon Results
+
+```{=typst}
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 8pt,
+  [
+    #align(center,
+      image("Data Center images/Figure_3_Power_Breakdown.svg", width: 6.6in)
+    )
+    
+    #align(center)[
+      *Figure 3.* Facility power breakdown.
+    ]
+  ],
+  [
+    #align(center,
+      image("Data Center images/Figure_4_Cost_and_Carbon.svg", width: 6.6in)
+    )
+    
+    #align(center)[
+      *Figure 4.* Cost and carbon emissions.
+    ]
+  ]
+)
+```
+
+```{=typst}
+#block(
+  inset: 7pt,
+  radius: 5pt,
+)[
+  *Observation:* Higher workload increases both IT and cooling demand, which raises cost and carbon emissions.
+]
+```
+
+# Cooling-System Performance Maps
+
+```{=typst}
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 8pt,
+  [
+    #align(center,
+      image("Data Center images/Figure_5_ADS_COP_Heatmap.svg", width: 6.4in)
+    )
+    
+    #align(center)[
+      *Figure 5.* ADS COP map.
+    ]
+  ],
+  [
+    #align(center,
+      image("Data Center images/Figure_6_ADS_Capacity_Heatmap.svg", width: 6.4in)
+    )
+    
+    #align(center)[
+      *Figure 6.* ADS capacity map.
+    ]
+  ]
+)
+```
+
+```{=typst}
+#block(
+  inset: 7pt,
+  radius: 5pt,
+)[
+  *Key Finding:* Maximum efficiency and maximum capacity occur in different operating regions.
+]
+```
+
+
+# AI Model Validation
+
+```{=typst}
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 8pt,
+  [
+    #align(center,
+      image("Data Center images/Figure_7_AI_Validation_COP.svg", width: 5.9in)
+    )
+    
+    #align(center)[
+      *Figure 7.* AI validation for COP.
+    ]
+  ],
+  [
+    #align(center,
+      image("Data Center images/Figure_8_AI_Validation_Capacity.svg", width: 5.9in)
+    )
+    
+    #align(center)[
+      *Figure 8.* AI validation for capacity.
+    ]
+  ]
+)
+```
+
+```{=typst}
+#block(
+  inset: 7pt,
+  radius: 5pt,
+)[
+  *Model Result:* The Random Forest surrogate predicts both COP and cooling capacity accurately and can support optimization and control.
+]
+```
+
+
+# Conclusion
+
+```{=typst}
+#block(
+  inset: 7pt,
+  radius: 5pt,
+)[
+  • Workload and price profiles reveal scheduling opportunities  
+  • Facility power, cost, and emissions vary substantially over time  
+  • ADS performance is strongly nonlinear  
+  • A Random Forest surrogate accurately predicts COP and cooling capacity
+]
+```
+
+

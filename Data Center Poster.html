@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mobina Pourmoshir">
+
+<title>AI-Driven Analytics for Energy-Efficient and Cost-Aware Data Center Planning</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="Data Center Poster_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Data Center Poster_files/libs/quarto-html/quarto.js"></script>
+<script src="Data Center Poster_files/libs/quarto-html/popper.min.js"></script>
+<script src="Data Center Poster_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Data Center Poster_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Data Center Poster_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Data Center Poster_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Data Center Poster_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Data Center Poster_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Data Center Poster_files/libs/bootstrap/bootstrap-0b3b9638000aa634054a1a0e4b24ad6b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
+
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">AI-Driven Analytics for Energy-Efficient and Cost-Aware Data Center Planning</h1>
+</div>
+
+
+<div class="quarto-title-meta-author column-page">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Mobina Pourmoshir <a href="mailto:mobina.pourmoshir@marquette.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            </p><p>Department of Mathematical and Statistical Sciences Marquette University</p>
+          <p></p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta column-page">
+
+      
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<style>
+body {
+  font-family: "Arial", "Helvetica", sans-serif;
+  background: #f7f7f7;
+  color: #111111;
+  margin: 0;
+  padding: 0;
+}
+
+.quarto-title-block {
+  display: none;
+}
+
+.poster-wrapper {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 18px 22px 28px 22px;
+  background: white;
+}
+
+.poster-header {
+  background: linear-gradient(90deg, #0b2c5f 0%, #163f86 100%);
+  color: white;
+  border-radius: 12px;
+  padding: 22px 28px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+}
+
+.poster-title {
+  font-size: 2.3rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.poster-subtitle {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.poster-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.poster-box {
+  background: white;
+  border: 2px solid #d9e1ef;
+  border-radius: 12px;
+  padding: 14px 16px 16px 16px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.poster-box h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  background: #ffc72c;
+  color: #0b2c5f;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.poster-box h3 {
+  color: #0b2c5f;
+  margin-top: 12px;
+  margin-bottom: 8px;
+  font-size: 1.02rem;
+  font-weight: 800;
+}
+
+.poster-box p,
+.poster-box li {
+  font-size: 0.97rem;
+  line-height: 1.45;
+}
+
+.poster-box ul {
+  margin-top: 8px;
+  margin-bottom: 6px;
+  padding-left: 1.2rem;
+}
+
+.figure-block {
+  margin-top: 10px;
+  margin-bottom: 16px;
+}
+
+.figure-block img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  background: white;
+  padding: 4px;
+}
+
+.fig-caption {
+  margin-top: 6px;
+  font-size: 0.88rem;
+  line-height: 1.35;
+  color: #333333;
+}
+
+.key-metric {
+  background: #eef4ff;
+  border-left: 6px solid #0b2c5f;
+  padding: 10px 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+}
+
+.footer-box {
+  margin-top: 18px;
+  background: #0b2c5f;
+  color: white;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 0.96rem;
+}
+
+.equation-box {
+  background: #f8fbff;
+  border: 1px solid #d7e4fa;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 10px 0;
+}
+
+@media print {
+  body {
+    background: white;
+  }
+  .poster-wrapper {
+    max-width: none;
+    padding: 8px;
+  }
+  .poster-box {
+    break-inside: avoid;
+  }
+}
+</style>
+<div class="poster-wrapper">
+  <div class="poster-header">
+    <div class="poster-title">AI-Driven Analytics for Energy-Efficient and Cost-Aware Data Center Planning</div>
+    <div class="poster-subtitle">
+      <strong>Mobina Pourmoshir</strong><br>
+      Department of Mathematical and Statistical Sciences, Marquette University<br>
+      <span style="font-size:0.98rem;">mobina.pourmoshir@marquette.edu</span>
+    </div>
+  </div>
+
+  <div class="poster-grid">
+<div>
+<section id="introduction" class="level2 poster-box">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Modern data centers consume large amounts of electricity for both computing and cooling. As computational demand increases, operators must balance three competing objectives: maintaining service performance, reducing operating cost, and limiting environmental impact.</p>
+<p>This study analyzes a structured data center dataset containing hourly workload demand, electricity prices, server parameters, adsorption cooling system operating states, and planning-related variables. The main goal is to show how data analytics and machine learning can support smarter operational planning.</p>
+</section>
+<section id="motivation" class="level2 poster-box">
+<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
+<p>Data center operation is influenced by three strongly coupled factors:</p>
+<ul>
+<li>time-varying computational workload,</li>
+<li>fluctuating electricity prices,</li>
+<li>nonlinear cooling-system performance.</li>
+</ul>
+<p>These factors do not evolve independently. Peak workload periods may not align with the highest electricity-price hours, and cooling efficiency depends heavily on operating temperatures. This creates a strong opportunity for AI-based control and cost-aware scheduling.</p>
+</section>
+<section id="dataset-overview" class="level2 poster-box">
+<h2 class="anchored" data-anchor-id="dataset-overview">Dataset Overview</h2>
+<p>The dataset includes multiple sheets describing the operational and physical characteristics of a data center system:</p>
+<ul>
+<li><strong>Workload Curves:</strong> hourly interactive and batch workload demand</li>
+<li><strong>Electricity Price Curves:</strong> hourly electricity price in USD/kWh</li>
+<li><strong>Server Parameters:</strong> server power, speed, frequency, and capacity limits</li>
+<li><strong>ADS Operating States:</strong> cooling-system efficiency and cooling capacity over temperature conditions</li>
+<li><strong>Planning Parameters:</strong> economic planning inputs</li>
+<li><strong>Carbon Emission:</strong> carbon intensity and carbon price</li>
+<li><strong>Cooling-related Equipment:</strong> thermal and equipment parameters</li>
+<li><strong>Physical Properties:</strong> constants such as density and specific heat</li>
+</ul>
+<p>The analysis focuses on workload behavior, power demand, electricity cost, emissions, and cooling-system efficiency.</p>
+</section>
+<section id="objectives" class="level2 poster-box">
+<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<p>The main objectives of this work are:</p>
+<ul>
+<li>characterize daily workload and electricity-price patterns,</li>
+<li>estimate derived server and facility power behavior,</li>
+<li>evaluate hourly cost and carbon implications,</li>
+<li>analyze the nonlinear performance map of the adsorption cooling system,</li>
+<li>build an AI surrogate model that predicts cooling efficiency and cooling capacity.</li>
+</ul>
+<div class="key-metric">
+<p><strong>Main AI task:</strong> Learn a fast surrogate model for ADS coefficient of performance (COP) and cooling capacity as functions of generator and condenser temperatures.</p>
+</div>
+</section>
+<section id="workload-and-price-behavior" class="level2 poster-box">
+<h2 class="anchored" data-anchor-id="workload-and-price-behavior">Workload and Price Behavior</h2>
+<section id="workload-profile" class="level3">
+<h3 class="anchored" data-anchor-id="workload-profile">Workload profile</h3>
+<div class="figure-block">
+<img src="Data%20Center%20images/Figure_1_Hourly_Workload.svg" class="img-fluid">
+<div class="fig-caption">
+<p><strong>Figure 1.</strong> Hourly workload demand reveals a clear daily pattern, with interactive workload dominating batch workload across most hours.</p>
+</div>
+</div>
+</section>
+<section id="electricity-price-profile" class="level3">
+<h3 class="anchored" data-anchor-id="electricity-price-profile">Electricity price profile</h3>
+<div class="figure-block">
+<img src="Data%20Center%20images/Figure_2_Electricity_Price.svg" class="img-fluid">
+<div class="fig-caption">
+<p><strong>Figure 2.</strong> Electricity price varies across the day, creating opportunities for time-aware and cost-aware operational scheduling.</p>
+</div>
+</div>
+<p>The workload curves show predictable daily variation, while electricity prices fluctuate independently. This mismatch suggests that flexible demand, especially batch processing, may be shifted toward cheaper operating hours without harming user-facing performance.</p>
+</section>
+</section>
+</div>
+<div>
+<section id="methodology" class="level2 poster-box">
+<h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
+<section id="descriptive-analytics" class="level3">
+<h3 class="anchored" data-anchor-id="descriptive-analytics">1. Descriptive analytics</h3>
+<p>Hourly interactive and batch workloads are combined to form total demand. These time profiles are used to understand daily operating patterns.</p>
+</section>
+<section id="derived-operational-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="derived-operational-metrics">2. Derived operational metrics</h3>
+<p>Using the server and cooling parameters, several operational quantities are estimated:</p>
+<ul>
+<li>required server count,</li>
+<li>server operating frequency,</li>
+<li>IT power demand,</li>
+<li>cooling power demand,</li>
+<li>total facility power,</li>
+<li>electricity cost,</li>
+<li>carbon emissions.</li>
+</ul>
+</section>
+<section id="cooling-system-analytics" class="level3">
+<h3 class="anchored" data-anchor-id="cooling-system-analytics">3. Cooling-system analytics</h3>
+<p>The adsorption cooling system is represented by a performance map with inputs:</p>
+<ul>
+<li>generator temperature (T^{gen}),</li>
+<li>condenser temperature (T^{cond}),</li>
+</ul>
+<p>and outputs:</p>
+<ul>
+<li>coefficient of performance (COP),</li>
+<li>cooling capacity (q^{cap}).</li>
+</ul>
+</section>
+<section id="ai-model" class="level3">
+<h3 class="anchored" data-anchor-id="ai-model">4. AI model</h3>
+<p>A <strong>Random Forest multi-output regression model</strong> is trained to predict both COP and cooling capacity from operating temperatures.</p>
+</section>
+</section>
+<section id="key-equations" class="level2 poster-box">
+<h2 class="anchored" data-anchor-id="key-equations">Key Equations</h2>
+<div class="equation-box">
+<p><strong>Electricity cost</strong> [ = ]</p>
+</div>
+<div class="equation-box">
+<p><strong>Carbon emissions</strong> [ = ]</p>
+</div>
+<div class="equation-box">
+<p><strong>AI surrogate model</strong> [ (, ^{cap}) = f(T^{gen}, T^{cond}) ]</p>
+</div>
+<div class="equation-box">
+<p><strong>Model evaluation</strong> [ R^2 = 1 - ]</p>
+</div>
+<p>The ADS operating-state sheet contains roughly 1000 operating points, making it the strongest part of the dataset for supervised learning.</p>
+</section>
+<section id="power-cost-and-carbon-results" class="level2 poster-box">
+<h2 class="anchored" data-anchor-id="power-cost-and-carbon-results">Power, Cost, and Carbon Results</h2>
+<section id="power-demand-breakdown" class="level3">
+<h3 class="anchored" data-anchor-id="power-demand-breakdown">Power demand breakdown</h3>
+<div class="figure-block">
+<img src="Data%20Center%20images/Figure_3_Power_Breakdown.svg" class="img-fluid">
+<div class="fig-caption">
+<p><strong>Figure 3.</strong> Total facility power reflects the combined contribution of IT demand and cooling demand, both of which increase with workload intensity.</p>
+</div>
+</div>
+</section>
+<section id="cost-and-emissions" class="level3">
+<h3 class="anchored" data-anchor-id="cost-and-emissions">Cost and emissions</h3>
+<div class="figure-block">
+<img src="Data%20Center%20images/Figure_4_Cost_and_Carbon.svg" class="img-fluid">
+<div class="fig-caption">
+<p><strong>Figure 4.</strong> Hourly electricity cost and carbon emissions vary over time and are jointly influenced by facility power demand and electricity pricing.</p>
+</div>
+</div>
+<p>Higher workload generally increases both IT power and cooling demand. Since cost depends on both demand and price, economically expensive periods do not always coincide with the highest workload hours. This makes demand shaping and control especially valuable.</p>
+</section>
+</section>
+<section id="cooling-system-performance-maps" class="level2 poster-box">
+<h2 class="anchored" data-anchor-id="cooling-system-performance-maps">Cooling-System Performance Maps</h2>
+<section id="ads-coefficient-of-performance" class="level3">
+<h3 class="anchored" data-anchor-id="ads-coefficient-of-performance">ADS coefficient of performance</h3>
+<div class="figure-block">
+<img src="Data%20Center%20images/Figure_5_ADS_COP_Heatmap.svg" class="img-fluid">
+<div class="fig-caption">
+<p><strong>Figure 5.</strong> ADS coefficient of performance changes nonlinearly with generator and condenser temperatures, revealing regions of higher cooling efficiency.</p>
+</div>
+</div>
+</section>
+<section id="ads-cooling-capacity" class="level3">
+<h3 class="anchored" data-anchor-id="ads-cooling-capacity">ADS cooling capacity</h3>
+<div class="figure-block">
+<img src="Data%20Center%20images/Figure_6_ADS_Capacity_Heatmap.svg" class="img-fluid">
+<div class="fig-caption">
+<p><strong>Figure 6.</strong> ADS cooling capacity varies across operating conditions, illustrating the trade-off between capacity delivery and thermodynamic efficiency.</p>
+</div>
+</div>
+<p>The heatmaps show that maximum efficiency and maximum cooling capacity do not always occur in the same operating region. This trade-off motivates predictive optimization rather than fixed-rule operation.</p>
+</section>
+</section>
+</div>
+<div>
+<section id="ai-model-results" class="level2 poster-box">
+<h2 class="anchored" data-anchor-id="ai-model-results">AI Model Results</h2>
+<section id="validation-for-cop" class="level3">
+<h3 class="anchored" data-anchor-id="validation-for-cop">Validation for COP</h3>
+<div class="figure-block">
+<img src="Data%20Center%20images/Figure_7_AI_Validation_COP.svg" class="img-fluid">
+<div class="fig-caption">
+<p><strong>Figure 7.</strong> The Random Forest surrogate predicts ADS coefficient of performance accurately, with predicted values closely aligned with observed values.</p>
+</div>
+</div>
+</section>
+<section id="validation-for-cooling-capacity" class="level3">
+<h3 class="anchored" data-anchor-id="validation-for-cooling-capacity">Validation for cooling capacity</h3>
+<div class="figure-block">
+<img src="Data%20Center%20images/Figure_8_AI_Validation_Capacity.svg" class="img-fluid">
+<div class="fig-caption">
+<p><strong>Figure 8.</strong> The Random Forest surrogate also predicts cooling capacity with high accuracy, making it suitable for fast decision support and optimization workflows.</p>
+</div>
+</div>
+<p>The AI model provides a fast approximation of the detailed ADS performance table. This makes it practical for real-time control, optimization, and scenario analysis.</p>
+</section>
+</section>
+<section id="discussion" class="level2 poster-box">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<p>This study highlights three main insights.</p>
+<section id="predictable-workload-structure" class="level3">
+<h3 class="anchored" data-anchor-id="predictable-workload-structure">1. Predictable workload structure</h3>
+<p>The workload follows a strong and interpretable daily pattern. This makes forecasting and adaptive scheduling feasible.</p>
+</section>
+<section id="cost-aware-opportunity" class="level3">
+<h3 class="anchored" data-anchor-id="cost-aware-opportunity">2. Cost-aware opportunity</h3>
+<p>Electricity prices do not perfectly align with workload demand. This mismatch creates room for cost reduction through smarter task allocation, especially for flexible workloads such as batch processing.</p>
+</section>
+<section id="nonlinear-cooling-behavior" class="level3">
+<h3 class="anchored" data-anchor-id="nonlinear-cooling-behavior">3. Nonlinear cooling behavior</h3>
+<p>Cooling performance is highly nonlinear. Simple linear rules are not sufficient to describe the relationship between operating temperatures, efficiency, and cooling capacity. The Random Forest surrogate provides a practical alternative by learning these relationships directly from data.</p>
+</section>
+</section>
+<section id="conclusion" class="level2 poster-box">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>This work demonstrates how statistical analysis and machine learning can support smarter data center planning and operation.</p>
+<p>The main findings are:</p>
+<ul>
+<li>workload and electricity-price profiles reveal meaningful scheduling opportunities,</li>
+<li>facility power, cost, and carbon emissions vary substantially over the day,</li>
+<li>ADS performance is strongly nonlinear,</li>
+<li>a Random Forest surrogate accurately predicts both COP and cooling capacity.</li>
+</ul>
+<p>Overall, AI-driven operational analytics can help data centers become more energy-efficient, cost-aware, and environmentally responsible.</p>
+</section>
+<section id="future-work" class="level2 poster-box">
+<h2 class="anchored" data-anchor-id="future-work">Future Work</h2>
+<p>Potential next steps include:</p>
+<ul>
+<li>workload forecasting using time-series models,</li>
+<li>cost-aware batch scheduling,</li>
+<li>multi-objective optimization of energy, cost, and carbon emissions,</li>
+<li>reinforcement learning for adaptive control,</li>
+<li>integration of AI surrogates into digital twins and real-time operational decision systems.</li>
+</ul>
+</section>
+<section id="acknowledgment" class="level2 poster-box">
+<h2 class="anchored" data-anchor-id="acknowledgment">Acknowledgment</h2>
+<p>I would like to thank the Department of Mathematical and Statistical Sciences at Marquette University for its support.</p>
+</section>
+</div>
+  </div>
+
+  <div class="footer-box">
+    <strong>Contact:</strong> mobina.pourmoshir@marquette.edu
+  </div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
