@@ -5,7 +5,7 @@ format:
     size: "36x24"
     poster-authors: "Pouya Zolfi"
     departments: "Department of Electrical and Computer Engineering"
-    institution-logo: "./images/MU.jpg"
+    institution-logo: "./images/Marquette-engineering-Logo.png"
     footer-text: "Marquette University"
     footer-url: "https://www.linkedin.com/in/pouyazolfi"
     footer-emails: "pouya.zolfi@marquette.edu"
@@ -77,33 +77,39 @@ The adsorption cooling system (ADS) is modeled using:
 
 ## Step 3: AI Surrogate Model
 
-We train a Random Forest multi-output model:
+We train a Random Forest multi-output model to approximate the ADS operating map:
 
 $$
-(widehat(COP), widehat(q^(cap))) = f(T^(gen), T^(cond))
+(\hat{COP}, \hat{q}^{cap})= f(T^{gen}, T^{cond})
 $$
 
-to approximate the ADS operating map.
+```{=typst}
+#v(-2.2em)
+```
 
 
 # Key Equations
 
 $$
-Electricity Cost = Energy Consumption times Electricity Price
+$$
+
+
+$$
+\text{Electricity Cost} = \text{Energy Consumption} \times \text{Electricity Price}
 $$
 
 $$
 $$
 
 $$
-Carbon Emissions = Energy Consumption times Carbon Intensity
+\text{Carbon Emissions} = \text{Energy Consumption} \times \text{Carbon Intensity}
 $$
 
 $$
 $$
 
 $$
-R^2 = 1 - frac(sum_i (y_i - hat(y)_i)^2, sum_i (y_i - bar(y))^2)
+R^2 = 1 - \frac{\sum_i (y_i - \hat{y}_i)^2}{\sum_i (y_i - \bar{y})^2}
 $$
 
 
@@ -187,18 +193,18 @@ $$
   gutter: 8pt,
   [
     #align(center,
-      image("Data Center images/Figure_5_ADS_COP_Heatmap.svg", width: 6.4in)
+      image("Data Center images/Figure_5_ADS_COP_Heatmap.svg", width: 100%)
     )
-    
+
     #align(center)[
       *Figure 5.* ADS COP map.
     ]
   ],
   [
     #align(center,
-      image("Data Center images/Figure_6_ADS_Capacity_Heatmap.svg", width: 6.4in)
+      image("Data Center images/Figure_6_ADS_Capacity_Heatmap.svg", width: 100%)
     )
-    
+
     #align(center)[
       *Figure 6.* ADS capacity map.
     ]
@@ -211,10 +217,13 @@ $$
   inset: 7pt,
   radius: 5pt,
 )[
-  *Key Finding:* Maximum efficiency and maximum capacity occur in different operating regions.
+  *Key Finding:* Maximum efficiency and capacity occur in different operating regions.
 ]
 ```
 
+```{=typst}
+#v(-1em)
+```
 
 # AI Model Validation
 
@@ -224,7 +233,7 @@ $$
   gutter: 8pt,
   [
     #align(center,
-      image("Data Center images/Figure_7_AI_Validation_COP.svg", width: 5.9in)
+      image("Data Center images/Figure_7_AI_Validation_COP.svg", width: 100%)
     )
     
     #align(center)[
@@ -233,7 +242,7 @@ $$
   ],
   [
     #align(center,
-      image("Data Center images/Figure_8_AI_Validation_Capacity.svg", width: 5.9in)
+      image("Data Center images/Figure_8_AI_Validation_Capacity.svg", width: 100%)
     )
     
     #align(center)[
@@ -261,8 +270,11 @@ $$
   radius: 5pt,
 )[
   • Workload and price profiles reveal scheduling opportunities  
+  
   • Facility power, cost, and emissions vary substantially over time  
+  
   • ADS performance is strongly nonlinear  
+  
   • A Random Forest surrogate accurately predicts COP and cooling capacity
 ]
 ```
