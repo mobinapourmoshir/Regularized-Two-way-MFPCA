@@ -16,7 +16,7 @@ citeproc: true
 ---
 
 ```{=typst}
-#set text(font: "Helvetica")
+#set text(font: "Arial")
 ```
 
 # Background
@@ -30,13 +30,11 @@ citeproc: true
 
 # Methodology: Functional Autoencoder
 
-We propose a two-stage framework that integrates representation learning with forecasting.
+We propose a two-stage framework that integrates representation learning with forecasting. [@FAE2021], [@2024cao]
 
 ## Step 1: Representation Learning
 
-Let  
-
-${x}_t = (X_t(s_1), \dots, X_t(s_J))^\top$
+Let   ${x}_t = (X_t(s_1), \dots, X_t(s_J))^\top$
 
 - Encoder: ${h}_t = E_\theta({x}_t)$
 
@@ -122,8 +120,7 @@ Forecast: $\hat{{h}}_{T+1}, \dots, \hat{{h}}_{T+L}$
 
 # Real Data Application
 
-## USA Fertility Data
-Age-specific fertility rates in the U.S. (1933–2023) are observed as smooth age curves with strong temporal dependence, making them well-suited for functional time series modeling.
+USA Fertility Data: Age-specific fertility rates in the U.S. (1933–2023) are observed as smooth age curves with strong temporal dependence, making them well-suited for functional time series modeling.[@Hyndman2007]
 
 ```{=typst}
 #align(center,
@@ -131,6 +128,9 @@ Age-specific fertility rates in the U.S. (1933–2023) are observed as smooth ag
 )
 
 ```
+
+# Results
+
 ## Forecasting Setup
 
 
@@ -143,7 +143,7 @@ Age-specific fertility rates in the U.S. (1933–2023) are observed as smooth ag
 
   *Forecasting Frameworks*
 
-  • FPCA → VAR → Reconstruction (linear baseline)  
+  • FPCA → VAR → Reconstruction (linear baseline) 
   • FAE → VAR → Decode (proposed nonlinear approach)
 
   *Objective: * Compare linear and nonlinear representations.
@@ -205,8 +205,7 @@ Age-specific fertility rates in the U.S. (1933–2023) are observed as smooth ag
 ```
 
 # Reference 
-::: {#refs}
-[@Hyndman2007]
-[@FAE2021]
-[@2024cao]
-:::
+
+```{=typst}
+#set text(size: 12pt)
+```
