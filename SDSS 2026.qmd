@@ -208,7 +208,7 @@ header-includes:
   - \textcolor{TitleBlue}{Sparse FPCA}: Enforces sparsity for interpretability [@huang2008sparse; @SparsePCA2020].
   - Multivariate FPCA (MFPCA) [@silverman1996smoothed; @Happ_2018].
   - Regularized MFPCA: Penalties improve estimation & interpretability [@haghbin2023regMFPCA].
-  - **Two-way functional data:** Two-way functional data consist of a data matrix whose row and column domains are both structured. Observations vary along these two domains (e.g., time × frequency), with applications in climate science, neuroscience, etc. Huang [@twoway_huang] applied regularization to both left and right singular vectors in SVD.
+  - **Two-way functional data:** consist of a data matrix whose row and column domains are both structured. Huang [@twoway_huang] applied regularization to both left and right singular vectors in SVD.
   
 \vspace{1em}
 
@@ -606,17 +606,6 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 ```
 
 
-## Simulation: Estimation Performance
-
-**Accuracy measures**:
-
-1. Variable-wise MSE: 
-   $$\mathrm{MSE}_{k\ell} = \tfrac{1}{m}\sum_{j=1}^m(\hat v_{k\ell}(t_j)-v_{k\ell}(t_j))^2$$
-2. Replication-averaged MSE:
-   $$\overline{\mathrm{MSE}}_{k\ell} = \tfrac{1}{R}\sum_{r=1}^R \mathrm{MSE}_{k\ell}^{(r)}$$  
-3. Multivariate MSE:  
-   $$\mathrm{MSE}_\ell^{(\mathrm{multi})} = \tfrac{1}{m}\sum_{j=1}^m\sum_{k=1}^2(\hat v_{k\ell}(t_j)-v_{k\ell}(t_j))^2$$
-
 
 ## Simulation: Estimation Performance
 
@@ -684,16 +673,38 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 
 # Two-way Regularized MFPCA {auto-animate="true"}
 \hypertarget{sec:two_way}{}
-- **Two-way functional data:** Two-way functional data consist of a data matrix whose row and column domains are both structured
 
+- **Two-way functional data:** A data matrix whose row and column domains are both structured. Observations vary along these two domains, with applications in climate science, neuroscience, etc. 
 - **Limitation of standard FPCA [@ramsay2005functional]:**  
   - Focuses on one domain (often time).  
   - Penalties applied only to loadings → ignores structure in second domain.  
   - Results may be rough or overly dense along the unpenalized axis.  
 
 ```{=latex}
-\pause
+  \only<1>{
+    \centering
+    % Left image (moved up a bit)
+    \begin{minipage}{0.55\linewidth}
+      \centering
+      \vspace{-2.5em} % <-- adjust this value
+      \includegraphics[width=\linewidth]{images/two-way eg.png}
+    \end{minipage}
+    \hspace{1em}
+    % Right image (unchanged)
+    \begin{minipage}{0.40\linewidth}
+      \centering
+      \includegraphics[height=0.6\textheight]{images/NDVI.png}
+    \end{minipage}
+  }
+
+
 ```
+
+
+```{=latex}
+    \pause
+```
+
 
 - **Two-way FPCA [@twoway_huang]:**  
   - Introduced **smoothness penalties** on both scores and loadings.  
@@ -728,44 +739,6 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 
 - Multivariate $v$:  $\pmb\Omega_v=\operatorname{diag}(\Omega_1,\ldots,\Omega_p).$
 
-
-## Two-way Smoothed MFPCA: Conditional GCV
-
-- Minimizers:  
-    ```{=latex}
-    \vspace{-3mm}
-    \small
-\[
-u=\frac{\pmb S_u(\alpha_u)\,\pmb X v}{v^\top (I+\pmb{\alpha}_v\,\pmb{\Omega}_v)\,v}
-=\frac{\pmb S_u(\alpha_u)}{1+\pmb{\alpha}_v\,\pmb R_v(v)}\;\frac{\pmb X v}{\|v\|^2},
-\qquad
-v=\frac{\pmb S_v(\pmb{\alpha}_v)\,\pmb X^\top u}{u^\top (I+\alpha_u\,\pmb{\Omega}_u)\,u}
-=\frac{\pmb S_v(\pmb{\alpha}_v)}{1+\alpha_u\,\pmb R_u(u)}\;\frac{\pmb X^\top u}{\|u\|^2}.
-\]
-    ```
-
-- Rayleigh quotients:  $\pmb R_u(u)=\frac{u^\top\pmb\Omega_u u}{\|u\|^2}, \qquad \pmb R_v(v)=\frac{v^\top\pmb\Omega_v v}{\|v\|^2}.$
-
-```{=latex}
-\pause
-```
-
-- Conditional GCV criteria [@twoway_huang]:  
-    ```{=latex}
-    \vspace{-4mm}
-  \small
-\[
-\mathrm{GCV}_u(\alpha_u;\pmb{\alpha}_v)=
-\frac{\tfrac1n\left\|\Big(I-\tfrac{\pmb S_u(\alpha_u)}{1+\pmb{\alpha}_v\,\pmb R_v(v)}\Big)\tfrac{\pmb X v}{\|v\|^2}\right\|^2}
-{\Big(1-\tfrac1n\,\mathrm{tr}\!\big(\tfrac{\pmb S_u(\alpha_u)}{1+\pmb{\alpha}_v\,\pmb R_v(v)}\big)\Big)^2},
-\qquad
-\mathrm{GCV}_v(\pmb{\alpha}_v;\alpha_u)=
-\frac{\tfrac1m\left\|\Big(I-\tfrac{\pmb S_v(\pmb{\alpha}_v)}{1+\alpha_u\,\pmb R_u(u)}\Big)\tfrac{\pmb X^\top u}{\|u\|^2}\right\|^2}
-{\Big(1-\tfrac1m\,\mathrm{tr}\!\big(\tfrac{\pmb S_v(\pmb{\alpha}_v)}{1+\alpha_u\,\pmb R_u(u)}\big)\Big)^2}.
-\]
-    ```
-
-- **Optimization:** Alternate updates of $u$ and $v$ using GCV until convergence → two-way regularized components.  
 
 
 ## Two-way Smooth + Sparse MFPCA
@@ -833,102 +806,6 @@ v=\frac{\pmb S_v(\pmb{\alpha}_v)\,\pmb X^\top u}{u^\top (I+\alpha_u\,\pmb{\Omega
 
 - This alternating scheme **isolates sparsity vs. smoothness** while ensuring accuracy + interpretability.  
 
-## K-Fold CV algorithm for Sparsity
-```{=latex}
-\footnotesize
-\begin{columns}[T,onlytextwidth]
-
-% ===================== Left: Plain K-fold CV =====================
-\begin{column}{0.48\textwidth}
-\begin{block}{K-Fold CV (\textcolor{Clay}{Row} Sparsity)}
-\begin{enumerate}
-  \item Split $\pmb X\in\mathbb R^{n\times M}$ into $K$ \textcolor{Clay}{column groups} 
-        $\{\pmb X^{(1)},\dots,\pmb X^{(K)}\}$.
-  \item For each $\gamma_j$ and $k=1,\dots,K$:
-    \begin{enumerate}
-      \item Train on $\pmb X^{(-k)}$, estimate $\textcolor{Clay}{u_j^{(-k)}}$.
-      \item Validate: $\textcolor{Clay}{v_j^{(k)}=\pmb X^{(k)\top}u_j^{(-k)}}$.
-      \item Fold error:
-        \[
-          \mathrm{Err}^{(k)}_j=\tfrac{1}{\tilde M}\,
-          \|\pmb X^{(k)}-\textcolor{Clay}{u_j^{(-k)}(v_j^{(k)})^\top}\|_F^2.
-        \]
-    \end{enumerate}
-  \item CV score: $\widehat{\mathrm{CV}}_j=\tfrac{1}{K}\sum_k \mathrm{Err}^{(k)}_j$.
-  \item Select $j_0=\arg\min_j \widehat{\mathrm{CV}}_j$.
-\end{enumerate}
-\end{block}
-\end{column}
-
-% ===================== Right: 1-SE Rule =====================
-\begin{column}{0.48\textwidth}
-\begin{block}{K-Fold CV + 1-SE Rule}
-\begin{enumerate}
-  \item Use same folds to collect $\mathrm{Err}^{(k)}_j$.
-  \item Compute mean $\widehat{\mathrm{CV}}_j$ and SE $\widehat{\mathrm{SE}}_j$:
-    \[
-    \widehat{\mathrm{SE}}_j=\sqrt{\tfrac{1}{K(K-1)}\sum_k
-    (\mathrm{Err}^{(k)}_j-\widehat{\mathrm{CV}}_j)^2}.
-    \]
-  \item Let $j^\star=\arg\min_j \widehat{\mathrm{CV}}_j$.
-  \item Choose sparsest $j_0$ with
-    $\widehat{\mathrm{CV}}_j \le
-     \widehat{\mathrm{CV}}_{j^\star}+\widehat{\mathrm{SE}}_{j^\star}$.
-\end{enumerate}
-\end{block}
-\end{column}
-
-\end{columns}
-```
-
-## K-Fold CV algorithm for Sparsity
-```{=latex}
-\footnotesize
-\begin{columns}[T,onlytextwidth]
-
-% ===================== Left: Plain K-fold CV =====================
-\begin{column}{0.48\textwidth}
-\begin{block}{K-Fold CV (\textcolor{DarkGreen}{Column} Sparsity)}
-\begin{enumerate}
-  \item Split $\pmb X\in\mathbb R^{n\times M}$ into $K$ \textcolor{DarkGreen}{row groups} 
-        $\{\pmb X^{(1)},\dots,\pmb X^{(K)}\}$.
-  \item For each $\gamma_j$ and $k=1,\dots,K$:
-    \begin{enumerate}
-      \item Train on $\pmb X^{(-k)}$, estimate $\textcolor{DarkGreen}{v_j^{(-k)}}$.
-      \item Validate: $\textcolor{DarkGreen}{u_j^{(k)}=\pmb X^{(k)} v_j^{(-k)}}$.
-      \item Fold error:
-        \[
-          \mathrm{Err}^{(k)}_j=\tfrac{1}{\tilde n}\,
-          \|\pmb X^{(k)}-\textcolor{DarkGreen}{u_j^{(k)}(v_j^{(-k)})^\top}\|_F^2.
-        \]
-    \end{enumerate}
-  \item CV score: $\widehat{\mathrm{CV}}_j=\tfrac{1}{K}\sum_k \mathrm{Err}^{(k)}_j$.
-  \item Select $j_0=\arg\min_j \widehat{\mathrm{CV}}_j$.
-\end{enumerate}
-\end{block}
-\end{column}
-
-% ===================== Right: 1-SE Rule =====================
-\begin{column}{0.48\textwidth}
-\begin{block}{K-Fold CV + 1-SE Rule}
-\begin{enumerate}
-  \item Use same folds to collect $\mathrm{Err}^{(k)}_j$.
-  \item Compute mean $\widehat{\mathrm{CV}}_j$ and SE $\widehat{\mathrm{SE}}_j$:
-    \[
-    \widehat{\mathrm{SE}}_j=\sqrt{\tfrac{1}{K(K-1)}\sum_k
-    (\mathrm{Err}^{(k)}_j-\widehat{\mathrm{CV}}_j)^2}.
-    \]
-  \item Let $j^\star=\arg\min_j \widehat{\mathrm{CV}}_j$.
-  \item Choose sparsest $j_0$ with
-    $\widehat{\mathrm{CV}}_j \le
-     \widehat{\mathrm{CV}}_{j^\star}+\widehat{\mathrm{SE}}_{j^\star}$.
-\end{enumerate}
-\end{block}
-\end{column}
-
-\end{columns}
-```
-
 
 ## Chessboard
 ```{=latex}
@@ -977,72 +854,7 @@ v=\frac{\pmb S_v(\pmb{\alpha}_v)\,\pmb X^\top u}{u^\top (I+\alpha_u\,\pmb{\Omega
 ```
 
 
-## Simulation: Two-way Functional Data 
-- **Data-generating process:** $X^{(1)}_{ij} = u_{i1} v_{11}(t_j) + u_{i2} v_{12}(t_j) + \epsilon_{ij}^{(1)}, \quad X^{(2)}_{ij} = u_{i1} v_{21}(t_j) + u_{i2} v_{22}(t_j) + \epsilon_{ij}^{(2)},$
-- **Latent scores:** generated as smooth functions  
-    ```{=latex}
-    \vspace{-4mm}
-  $$
-  u_{1}(s)=\begin{cases}
-  \sin(\pi s), & s>0, \\ 
-  0, & \text{otherwise},
-  \end{cases}
-  \quad
-  u_{2}(s)=\sin(2\pi s),\quad s\in[-1,1].
-  $$
-    ```
 
-```{=latex}
-\pause
-```
-
-- **Functional PCs:**  
-  - Variable 1: $v_{11}(t)=\tfrac{t+\sin(\pi t)}{s_1},\qquad v_{12}(t)=\tfrac{\cos(3\pi t)}{s_2}$
-  - Variable 2:  
-  
-    ```{=latex}
-  \vspace{-8mm}
-    $$
-      v_{21}(t)=
-      \begin{cases}
-        \dfrac{\sin(3\pi t)}{s_3}, & t \in \bigl(-\tfrac13,\tfrac13\bigr),\\
-        0, & \text{otherwise},
-      \end{cases}
-      \qquad
-      v_{22}(t)=
-      \begin{cases}
-        \dfrac{\sin(2\pi t)}{s_4}, & t \le -\tfrac13,\\
-        \dfrac{\sin(\pi t)}{s_4}, & t \ge \tfrac13,\\
-        0, & \text{otherwise}.
-      \end{cases}
-    $$
-    ```
-  
-  
-  
-## Evaluation Metrics 
-- **Integrated Squared Error (ISE):**  
-  For replicate $r$ and component $u_1$:  
-  $$
-  \mathrm{ISE}_r^{(u_1,\text{method})}
-  = \frac{1}{m}\sum_{j=1}^m
-  \Big(u_1(t_j) - \widehat u_1^{(\text{method})}(t_j)\Big)^2.
-  $$
-- **Relative ISE (R\_ISE):** ratio vs best method  
-  $$
-  R_r^{(u_1,\text{method})}
-  = \frac{\mathrm{ISE}_r^{(u_1,\text{method})}}
-         {\mathrm{ISE}_r^{(u_1,\text{best})}}.
-  $$
-- **Monte Carlo averages:**  
-  $$
-  \overline{R}^{(u_1,\text{method})}
-  = \frac{1}{N}\sum_{r=1}^N R_r^{(u_1,\text{method})}, 
-  \qquad
-  \mathrm{SE}\big(\overline{R}\big)
-  = \sqrt{\frac{1}{N(N-1)}\sum_{r=1}^N
-  \Big(R_r - \overline{R}\Big)^2}.
-  $$
 
 ## \SimResultsTitle
 
@@ -1060,59 +872,6 @@ v=\frac{\pmb S_v(\pmb{\alpha}_v)\,\pmb X^\top u}{u^\top (I+\alpha_u\,\pmb{\Omega
 ```
 
 
-## Simulation Results
-```{=latex}
-\begin{columns}[T,onlytextwidth]
-
-% -------- Left table: ISE --------
-\begin{column}{0.51\textwidth}
-\scriptsize
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.05}
-
-\begin{block}{Table 3: Mean ISE for each method and parameter}
-\begin{tabular}{lrrrr}
-\toprule
-Method              & u1     & u2     & v1       & v2       \\
-\midrule
-SVD                 & 0.3651 & 0.1587 & 0.00005  & 0.00010  \\
-Smooth+Sparse $v$   & 0.3651 & 0.1587 & \textbf{0.00002} & \textbf{0.00002} \\
-Smooth+Sparse $u$   & \textbf{0.3650} & \textbf{0.1584} & 0.00005  & 0.00010  \\
-Two-way Smoothness  & \textbf{0.3650} & 0.1585 & \textbf{0.00002} & \textbf{0.00002} \\
-Two-way Sparsity    & 0.3651 & 0.1586 & 0.00004  & 0.00009  \\
-\textbf{Two-way Sm+Sp} & \textbf{0.3650} & \textbf{0.1584} & \textbf{0.00002} & \textbf{0.00002} \\
-\bottomrule
-\end{tabular}
-\end{block}
-
-\end{column}
-
-% -------- Right table: Relative ISE --------
-\begin{column}{0.43\textwidth}
-\scriptsize
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.05}
-
-\begin{block}{Table 4: Mean Relative ISE for each method and parameter}
-\begin{tabular}{lrrrr}
-\toprule
-Method              & u1   & u2   & v1    & v2    \\
-\midrule
-SVD                 & 1.000 & 1.001 & 8.21  & 5.23 \\
-Two-way Sparsity    & 1.000 & 1.001 & 7.71  & 4.61 \\
-Smooth+Sparse $v$   & 1.000 & 1.001 & 1.05  & \textbf{1.01} \\
-Smooth+Sparse $u$   & \textbf{1.000} & \textbf{1.000} & 8.19  & 5.21 \\
-Two-way Smoothness  & \textbf{1.000} & \textbf{1.000} & \textbf{1.00} & 1.21 \\
-\bottomrule
-\end{tabular}
-\end{block}
-
-\end{column}
-
-\end{columns}
-```
-
-- Two-way Smooth+Sparse consistently yields the lowest errors across $u$ and $v$.
 
 ## Application: Motion Sense Data
 
@@ -1206,21 +965,6 @@ $$
 }
 ```
 
-## Acknowledgments {noframenumbering=true}
-```{=latex}
-\only<1>{\parbox{\textwidth}{This thesis would not have been possible without the support, guidance, and encouragement of many people.}}%
-
-\only<2>{\parbox{\textwidth}{\textbf{Dr.\ Mehdi Maadooliat: }\\ First and foremost, I am deeply thankful to my advisor, Dr. Mehdi Maadooliat. His mentorship has shaped not only this work but also my outlook as a researcher. From the start of my graduate studies, he has been a constant source of patience, thoughtful feedback, and encouragement. His dedication and belief in my potential have been invaluable in my growth as a student.}}%
-
-\only<3>{\parbox{\textwidth}{\textbf{Dr.\ Hossein Haghbin}\\ I would also like to acknowledge Dr. Hossein Haghbin, whose early guidance played an important role in directing my research interests. His insights and encouragement helped me approach functional data analysis with clarity and confidence.}}%
-
-\only<4>{\parbox{\textwidth}{\textbf{Committee Members:}\\ My sincere appreciation extends to my committee members, Dr. Rebecca Sanders and Dr. Hossein Haghbin, for generously offering their time and expertise. Their feedback and perspectives have strengthened this thesis and enriched my learning.}}%
-
-\only<5>{\parbox{\textwidth}{\textbf{Department and peers:}\\ I appreciate the Department of Mathematical and Statistical Sciences at Marquette University for a supportive, collaborative environment, and I thank my friends and labmates for their companionship, encouragement, and good humor.}}%
-
-\only<6>{\parbox{\textwidth}{\textbf{My dear family:}\\Most importantly, I am profoundly indebted to my family and my husband’s family. Their love, sacrifices, and unwavering support have given me every opportunity to pursue my education. I am especially grateful for their constant encouragement, for reminding me to keep perspective, and for always believing in me even when I doubted myself. \\ And to my husband, Pouya, words cannot fully capture my gratitude. His patience, unwavering support, and countless sacrifices have carried me through every stage of this journey. He has been my anchor during challenges and my greatest source of joy in moments of success. This achievement belongs as much to my family as it does to me.}}%
-```
-
 ##  {.center .middle noframenumbering=true}
 
 ```{=latex}
@@ -1234,66 +978,3 @@ $$
 ```
 
 
-## Appendix {noframenumbering=true}
-\textcolor{TitleBlue}{Variance Explained: Classical vs Regularized FPCA}
-
-::: incremental
-- **Classical FPCA:** Loadings $v_j$ orthonormal; scores $u_j=Xv_j$ uncorrelated.  
-  Variance explained by first $J$ PCs:
-  $$
-  \sum_{j=1}^J \|u_j\|^2
-  = \mathrm{trace}\!\big(V_J^\top X^\top X\,V_J\big),\qquad
-  V_J=[v_1,\dots,v_J].
-  $$
-
-- **Issue under regularization:** smoothness/sparsity break orthogonality → scores become correlated → naive sum $\sum \|u_j\|^2$ **double-counts** variance (cf. Huang et al., 2008).
-:::
-
-
-
-## Appendix {noframenumbering=true}
-
-\textcolor{TitleBlue}{Subspace-Projection Definition of Explained Variance}
-
-::: incremental
-- Normalize loadings and stack:
-  $$
-  V_J=[v_1,\dots,v_J],\qquad v_j \leftarrow \frac{v_j}{\|v_j\|}.
-  $$
-
-- Orthogonal projector matrix onto span $(v_1,\dots,v_J)$:
-  $$
-  H_J=V_J\,(V_J^\top V_J)^{-1} V_J^\top,\qquad
-  $$
-  where $H_{J}$ is a a symmetric idempotent matrix. ($H_{J}^{2}=H_{J},\; H_{J}^{\top}=H_{J}$)
-
-- Projected data and explained variance:
-  $$
-  X_J=X H_J,\qquad
-  \mathsf{V}_{\text{tot}}=\mathrm{tr}(X^\top X),\qquad
-  \mathcal{V}_J=\|X_J\|_F^2=\mathrm{tr}\!\big(H_J X^\top X H_J\big).
-  $$
-:::
-
-## Appendix {noframenumbering=true}
-\textcolor{TitleBlue}{PVE, Incremental PVE, and Properties}
-
-::: incremental
-- Incremental variance:
-  $$
-  \Delta\mathcal{V}_j=\mathcal{V}_j-\mathcal{V}_{j-1},\qquad \mathcal{V}_0=0.
-  $$
-
-- **Proportion of variance explained (PVE):**
-  $$
-  \mathrm{PVE}(J)=\frac{\mathcal{V}_J}{\mathsf{V}_{\text{tot}}},\qquad
-  \mathrm{pve}_j=\frac{\Delta\mathcal{V}_j}{\mathsf{V}_{\text{tot}}}
-  =\mathrm{PVE}(j)-\mathrm{PVE}(j-1).
-  $$
-
-- **Key properties:**  
-  • No double-counting (works with correlated scores).  
-  • Reduces to classical PCA when $V_J^\top V_J=I_J$.  
-  • Monotone in $J$ ($\mathcal{V}_J$ increases).  
-  • $\Delta\mathcal{V}_j$ = unique variance added by component $j$.
-:::
