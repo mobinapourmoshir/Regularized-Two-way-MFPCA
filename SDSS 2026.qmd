@@ -1,7 +1,7 @@
 ---
 title: "Regularized Multivariate Two-way Functional Principal Component Analysis"
 author:
-    name: "Mobina Pourmoshir"
+    name: "Mobina Pourmoshir, Dr. Mehdi Maadooliat"
     email: "mobina.pourmoshir@marquette.edu"
 institute: |
   Department of Mathematical and Statistical Sciences
@@ -62,7 +62,7 @@ header-includes:
     }
             
     \AtBeginDocument{%
-      \author[Mobina Pourmoshir]{Mobina Pourmoshir\\\small\texttt{mobina.pourmoshir@marquette.edu}}%
+      \author[Mobina Pourmoshir]{Mobina Pourmoshir, Dr. Mehdi Maadooliat\\\small\texttt{mobina.pourmoshir@marquette.edu}}%
     }
     \setbeamertemplate{section page}[none]
     \AtBeginSection[]{}
@@ -79,11 +79,11 @@ header-includes:
     \setbeamercolor{author in head/foot}{bg=MUgold, fg=black}
     \setbeamercolor{title in head/foot}{bg=MUgold,  fg=black}
     \setbeamercolor{date in head/foot}{bg=MUgold,   fg=black}
-    \titlegraphic{\vspace{-6mm}\includegraphics[width=0.18\textwidth]{images/MU.png}}
+    \titlegraphic{\vspace{-2cm}\includegraphics[width=0.18\textwidth]{images/MU.png}}
     \setbeamertemplate{footline}{%
       \leavevmode
       \hbox{%
-        \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}Mobina Pourmoshir\end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot} Pourmoshir \& Maadooliat \end{beamercolorbox}%
         \begin{beamercolorbox}[wd=.34\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}Regularized Multivariate Two-way FPCA\end{beamercolorbox}%
         \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex}\end{beamercolorbox}%
       }
@@ -126,7 +126,7 @@ header-includes:
     \setbeamertemplate{footline}{%
       \leavevmode%
       \hbox{%
-        \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}Mobina Pourmoshir\end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}Pourmoshir, Dr. Maadooliat\end{beamercolorbox}%
         \begin{beamercolorbox}[wd=.34\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}Regularized Multivariate Two-way FPCA\end{beamercolorbox}%
         \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex}\end{beamercolorbox}%
       }%
@@ -306,30 +306,6 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 \end{block}
 ```
 
-## Cross-Validation for Sparsity Selection
-- **Sparsity parameter**: Tuning parameter $\gamma$ controlling number of non-zero loadings in $v$ ($0 =$ dense, $m =$ full sparsity).  
-
-```{=latex}
-\begin{block}{Algorithm: K-fold CV Tuning Parameter Selection - Degree of sparsity}
-\label{algo:CvSparse}
-\small
-\begin{enumerate}
-   \item Randomly group the rows of side-by-side data matrix $X$ into $K$ roughly equal-sized groups, denoted as $X^1,...,X^K$. 
-   \item For each sparse tuning parameter $j \in \{0,1,...,m\}$ (level of sparsity), do the following: 
-   \begin{enumerate}
-     \item For $k = 1,...,K$, let $X^{-k}$ be the data matrix $X$ leaving out $X^k$. Apply Algorithm sFPCA-rSVD on $X^{-k}$ and derive the FPC scores $u^{-k}(j)$. Then project $X^k$ onto $u^{-k}(j)$ to obtain $v^k(j)$.
-     \item Calculate the K-fold CV scores defined as: ($N$ is the number of grid points in $X^k$)
-     \vspace{-1em}
-     \[
-     \textcolor{TitleBlue}{CV_j = \sum_{k=1}^{K} \frac{\Vert X^k - u^{-k}(j)v^{k}(j)\Vert^2}{N}}
-     \]
-     \vspace{-1em}
-   \end{enumerate}
-    \item Select the degree of sparsity as $j_0 = \arg\min\{CV(j)\}$.
-\end{enumerate}
-\end{block}
-```
-
 
 ## Overview of Existing Approaches
 
@@ -363,7 +339,7 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 ```{=latex}
     \only<1>{
       \centering
-      \includegraphics[width=0.4\linewidth]{images/MFPCA eg.jpg}
+      \includegraphics[width=0.6\linewidth,height=0.7\textheight]{images/MFPCA eg.jpg}
     }
     \vspace{-1mm}
 ```
@@ -396,20 +372,20 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 ## Methodology: Multivariate Functional Data Framework
 
 - A multivariate functional dataset is formed by **concatenating $p$ functional data matrices**.  
-  - Each variable: $X_i \in \mathbb{R}^{n \times m_i}$  where $n$: number of observations and $m_i$: grid points
+  - Each variable: $X_j \in \mathbb{R}^{n \times m_j}$  where $n$: number of observations and $m_j$: grid points
 
 ::: incremental
 
 - **Rank-one approximation** (per variable):  
   $$
-  X_i \approx u_i v_i^\top, 
-  \quad u_i \in \mathbb{R}^n, \; v_i \in \mathbb{R}^{m_i}
+  X_j \approx u_j v_j^\top, 
+  \quad u_j \in \mathbb{R}^n, \; v_j \in \mathbb{R}^{m_j}
   $$
 
-- **Full data matrix**:  $\mathbf{X} = \big[\,{\begingroup\color{green}X_1\endgroup}\; X_2 \; \cdots \; {\begingroup\color{purple}X_p\endgroup}\,\big]$
+- **Full data matrix**:  $\pmb{X} = \big[\,{\begingroup\color{green}X_1\endgroup}\; X_2 \; \cdots \; {\begingroup\color{purple}X_p\endgroup}\,\big]$
  
   $$
-  \mathbf{X} =
+  \pmb{X} =
   \begin{bmatrix}
   \color{green}{x_{11}(t_{11})} & \color{green}{\cdots} & \color{green}{x_{11}(t_{1m_1})} & \cdots & \color{purple}{x_{1p}(t_{p1})} & \color{purple}{\cdots} & \color{purple}{x_{1p}(t_{p m_p})} \\
   \color{green}{\vdots} & \color{green}{\ddots} & \color{green}{\vdots} & \ddots & \color{purple}{\vdots} & \color{purple}{\ddots} & \color{purple}{\vdots} \\
@@ -421,25 +397,23 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 ## Penalized Smooth MFPCA {auto-animate="true"}
 
 
-- Standard FPCA loadings may be noisy; smoothness penalties (via block-diagonal $\Omega_i$) improve structure and interpretability.  
+- Standard FPCA loadings may be noisy; smoothness penalties (via block-diagonal $\Omega_j$) improve structure and interpretability.  
 
 ::: incremental
 
-- Let $\pmb{X} \in \mathbb{R}^{n \times M}$ denote multivariate functional data, where $M = \sum_{i=1}^p m_i$.  
-  Its best rank-one approximation is $\pmb{X} \approx u v^\top$,  
-  with $u \in \mathbb{R}^n$ (score vector) and $v = [v_1,v_2,..., v_p]^\top \in \mathbb{R}^M$ (loading vector).  
-  A smoothness penalty is imposed on $v$.
+- Let $\pmb{X} \in \mathbb{R}^{n \times M}$ denote multivariate functional data, where $M = \sum_{j=1}^p m_j$.  
+  Its best rank-one approximation is $\pmb{X} \approx \pmb{u} \pmb{v}^\top$,  
+  with $\pmb{u} \in \mathbb{R}^n$ (score vector) and $\pmb{v} = [v_1,v_2,..., v_p]^\top \in \mathbb{R}^M$ (loading vector).  
+  A smoothness penalty is imposed on $\pmb{v}$.
   
 
-- The block-diagonal penalty matrix is  $\color{TitleRed}{\pmb{\Omega} = \operatorname{diag}\bigl(\Omega_1, \Omega_2, \dots, \Omega_p\bigr)}$,
-  where each $\Omega_i \in \mathbb{R}^{m_i \times m_i}$ is a univariate roughness penalty matrix.  
+- Define the weighted block-diagonal penalty matrix as $\color{TitleRed}{\pmb{\Omega}_{\pmb{\alpha}}=\operatorname{diag}(\alpha_1\Omega_1,\alpha_2\Omega_2,\dots,\alpha_p\Omega_p)}$, where each $\Omega_j \in \mathbb{R}^{m_j\times m_j}$ is a univariate roughness penalty matrix and $\pmb{\alpha}=(\alpha_1,\dots,\alpha_p)^\top$ contains the smoothing parameters.
 
 - The penalized reconstruction error is  
   $$
-  \min_{u,v} \; \lVert \pmb{X} - uv^\top \rVert_F^2 
-  + \color{TitleRed}{\pmb{\alpha}^\top \big(v^\top \pmb{\Omega} v\big)}\color{black}{,}
+  \min_{\pmb{u},\pmb{v}}\; \|\pmb{X}-\pmb{u}\pmb{v}^\top\|_F^2 + \color{TitleRed}{\pmb{v}^\top \pmb{\Omega}_{\pmb{\alpha}} \pmb{v}}.
   $$
-  where $\pmb{\alpha} = (\alpha_1, \dots, \alpha_p)^\top$ controls smoothness.  
+  
 
 :::
 
@@ -453,20 +427,20 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
   \item Initialize $v$.
   \item Repeat until convergence:
     \begin{enumerate}
-      \item $u \leftarrow \mathbf{X}v$
-      \item $v \leftarrow \textcolor{TitleRed}{\pmb{S}(\pmb{\alpha})}\mathbf{X}^\top u$
-      \item $v \leftarrow v / \lVert v \rVert$
+      \item $\pmb{u} \leftarrow \pmb{X}\pmb{v}$
+      \item $\pmb{v} \leftarrow \textcolor{TitleRed}{\pmb{S}(\pmb{\alpha})}\pmb{X}^\top \pmb{u}$
+      \item $\pmb{v} \leftarrow \pmb{v} / \lVert \pmb{v} \rVert$
     \end{enumerate}
-  \item Update $\mathbf{X} \leftarrow \mathbf{X} - \sigma u v^\top$ to extract the next PC.
+  \item Update $\pmb{X} \leftarrow \pmb{X} - \sigma \pmb{u} \pmb{v}^\top$ to extract the next PC.
 \end{enumerate}
 \end{block}
 ```
-- The smoothing operator is $\color{TitleRed}{\pmb{S}(\pmb{\alpha}) = \big(I + \pmb{\alpha}\pmb{\Omega}\big)^{-1}} \color{black}\in \mathbb{R}^{M \times M}$. 
+- The smoothing operator is $\color{TitleRed}{\pmb{S}(\pmb{\alpha}) = \big(I + \pmb{\Omega}_{\pmb{\alpha}}\big)^{-1}} \color{black}\in \mathbb{R}^{M \times M}$. 
 - The smoothing parameter $\pmb{\alpha}$ is selected via generalized cross-validation (GCV), defined as
     ```{=latex}
   \vspace{-1.5em}
 \begin{equation}\label{eq:MGCV one-way}
-	\textcolor{TitleRed}{\text{GCV}(\pmb{\alpha}) = \frac{1}{M} \frac{\Vert ({I} - \pmb{S}(\pmb{\alpha})) (\mathbf{X}^T u) \Vert^2}{\left(1 - \frac{1}{M} \text{tr} \{\pmb{S}(\pmb{\alpha})\}\right)^2}}.
+	\textcolor{TitleRed}{\text{GCV}(\pmb{\alpha}) = \frac{1}{M} \frac{\Vert ({I} - \pmb{S}(\pmb{\alpha})) (\pmb{X}^T \pmb{u}) \Vert^2}{\left(1 - \frac{1}{M} \text{tr} \{\pmb{S}(\pmb{\alpha})\}\right)^2}}.
 \end{equation}
     ```
 :::
@@ -480,19 +454,19 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
     ```{=latex}
     \pause
     ```
--  Sparsity parameters: $\pmb{\gamma}=(\gamma_1,\ldots,\gamma_p)$, where $\gamma_i$ ranges from 0 (no sparsity) to $m_i$ for each variable.
+-  Sparsity parameters: $\pmb{\gamma}=(\gamma_1,\ldots,\gamma_p)$, where $\gamma_j$ ranges from 0 (no sparsity) to $m_j$ for each variable.
 ```{=latex}
     \begin{block}{Algorithm: Regularized Power Iteration for Sparse MFPCA}
       \small
       \begin{enumerate}
         \item {Initialization:}
-              Compute rank-one SVD of $\pmb{X}$, $\pmb{X}\approx duv^\top$, and set $u \gets du$.
+              Compute rank-one SVD of $\pmb{X}$.
         \vspace{-0.5em}      
         \item {Iterate until convergence:}
           \begin{enumerate}
-            \item {Update left singular vector:} $u \leftarrow \pmb{X}v$
-            \item {Update right singular vector:} $v \leftarrow \textcolor{TitleBlue}{\pmb{h_\gamma}}\,\pmb{X}^\top u$
-            \item {Normalize right singular vector:} $v \leftarrow \dfrac{v}{\lVert v\rVert}$
+            \item {Update left singular vector:} $\pmb{u} \leftarrow \pmb{X}\pmb{v}$
+            \item {Update right singular vector:} $\pmb{v} \leftarrow \textcolor{TitleBlue}{\pmb{h_\gamma}}\,\pmb{X}^\top \pmb{u}$
+            \item {Normalize right singular vector:} $\pmb{v} \leftarrow \dfrac{\pmb{v}}{\lVert \pmb{v} \rVert}$
           \end{enumerate}
       \end{enumerate}
       \end{block}
@@ -500,20 +474,20 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 
 
 ## Smooth and Sparse Multivariate FPCA
-- The combined implementation of smoothness and sparsity on the loading vector $v$ in multivariate functional data is achieved by the following algorithm:
+- The combined implementation of smoothness and sparsity on the loading vector $\pmb{v}$ in multivariate functional data is achieved by the following algorithm:
 
 ```{=latex}
-\begin{block}{Algorithm: Regularized Power Iteration for Smooth MFPCA}
+\begin{block}{Algorithm: Regularized Power Iteration for Smooth + Sparse MFPCA}
 \small
 \begin{enumerate}
-  \item Initialize unit vectors $u$ and $v$ using SVD of $\pmb{X}$ (best rank-one approximation of $\pmb{X}$) 
+  \item Initialize unit vectors $\pmb{u}$ and $\pmb{v}$ using SVD of $\pmb{X}$. 
    \item Repeat till convergence 
    \begin{enumerate}
-     \item ${u} \leftarrow\pmb{X}{v}$
-     \item ${v} \leftarrow \textcolor{TitleRed}{\pmb{S}(\pmb{\alpha})} \textcolor{TitleBlue}{\pmb{h}(\pmb{\gamma_v})} \pmb{X}^\top {u}$ 
-     \item ${v}\leftarrow \frac{{v}}{\Vert {v}\Vert}$
+     \item $\pmb{u} \leftarrow\pmb{X}\pmb{v}$
+     \item $\pmb{v} \leftarrow \textcolor{TitleRed}{\pmb{S}(\pmb{\alpha})} \textcolor{TitleBlue}{\pmb{h}(\pmb{\gamma}_{\pmb{v}})} \pmb{X}^\top \pmb{u}$ 
+     \item $\pmb{v}\leftarrow \frac{\pmb{v}}{\Vert \pmb{v}\Vert}$
    \end{enumerate}
-   \item Update $\pmb{X} = \pmb{X} -\sigma uv^\top$ and proceed to find the next principal component. 
+   \item Update $\pmb{X} = \pmb{X} -\sigma \pmb{u}\pmb{v}^\top$ and proceed to find the next principal component. 
 \end{enumerate}
 \end{block}
 ```
@@ -522,54 +496,6 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 
 
 
-## Simulation: Estimation Performance
-
-- **Data-generating process:** Two functional variables:
-  $$
-  X^{(1)}_{ij} = u_{i1} v_{11}(t_j) + u_{i2} v_{12}(t_j) + \epsilon_{ij}^{(1)},
-  \quad
-  X^{(2)}_{ij} = u_{i1} v_{21}(t_j) + u_{i2} v_{22}(t_j) + \epsilon_{ij}^{(2)},
-  $$
-  - where $u_{i1}\sim N(0,\sigma_1^2),\; u_{i2}\sim N(0,\sigma_2^2)$, $\epsilon_{ij}^{(k)} \sim N(0,\sigma^2)$, and $n=m=101,\; t_j \in [-1,1]$  
-
-    ```{=latex}
-    \pause
-    \vspace{0.8em}
-    ```
-
-
-
-- **True functional PCs:**  
-  - Variable 1:  
-  
-  ```{=latex}
-  \vspace{-10mm}
-    $$
-      v_{11}(t)=\tfrac{t+\sin(\pi t)}{s_1},\qquad
-      v_{12}(t)=\tfrac{\cos(3\pi t)}{s_2}
-    $$
-    ```
-  - Variable 2:  
-  
-  ```{=latex}
-  \vspace{-8mm}
-    $$
-      v_{21}(t)=
-      \begin{cases}
-        \dfrac{\sin(3\pi t)}{s_3}, & t \in \bigl(-\tfrac13,\tfrac13\bigr),\\
-        0, & \text{otherwise},
-      \end{cases}
-      \qquad
-      v_{22}(t)=
-      \begin{cases}
-        \dfrac{\sin(2\pi t)}{s_4}, & t \le -\tfrac13,\\
-        \dfrac{\sin(\pi t)}{s_4}, & t \ge \tfrac13,\\
-        0, & \text{otherwise}.
-      \end{cases}
-    $$
-    \smallskip
-    Here, $s_1,s_2,s_3,s_4$ are normalizing constants ensuring unit $L^2$ norm.
-    ```
 
 ## Simulation: Estimation Performance
 **Scenarios tested:**
@@ -653,22 +579,6 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 
 
 
-## Application: Household Power Consumption
-
-::: columns
-::: {.column width="45%"}
-- **Dataset:** Bivariate functional data including active power and voltage consumption [@HouseholdElectricPower] for one household between December 2006 and November 2010.
-\vspace{1.5em}
-- Regularization reduces noise while preserving the dominant daily consumption patterns, enhancing interpretability without losing key structure.
-:::
-
-::: {.column width="55%"}
-![](images/Electrical_PCS.pdf){height="0.60\textheight"}
-
-\centering \tiny First 3 PCs: MFPCA (red) vs ReMFPCA (black)
-:::
-:::
-
 
 
 # Two-way Regularized MFPCA {auto-animate="true"}
@@ -719,12 +629,11 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 
 ## Two-way Smoothed MFPCA: Setup & Penalty
 
-- Two-way multivariate functional data: $\pmb X \in \mathbb{R}^{n\times M}, \quad M=\sum_{i=1}^p m_i.$  
+- Two-way multivariate functional data: $\pmb X \in \mathbb{R}^{n\times M}, \quad M=\sum_{j=1}^p m_j.$  
 
-- Roughness matrices: $\pmb\Omega_u\in\mathbb{R}^{n\times n},\;\pmb\Omega_v\in\mathbb{R}^{M\times M}$ (symmetric, non-negative definite).  
+- Roughness matrices: $\pmb\Omega_{\pmb{u}}\in\mathbb{R}^{n\times n}$ and multivariate loading penalty $\pmb\Omega_{\pmb{\alpha_v}} = \operatorname{diag}(\alpha_1\Omega_1,\ldots,\alpha_p\Omega_p) \in\mathbb{R}^{M\times M}$, both symmetric and non-negative definite. 
 
-
-- Smoothers: $\color{TitleRed}\pmb S_u(\alpha_u)=(I+\alpha_u\,\pmb\Omega_u)^{-1}, \qquad \pmb S_v(\pmb\alpha_v)=(I+\pmb\alpha_v\,\pmb\Omega_v)^{-1}.$
+- Smoothers: $\color{TitleRed}\pmb S_{\pmb{u}}(\alpha_{\pmb{u}})=(I+\alpha_{\pmb{u}}\,\pmb\Omega_{\pmb{u}})^{-1}, \qquad \pmb S_{\pmb{v}}(\pmb\alpha_{\pmb{v}})=(I+\pmb\Omega_{\pmb{\alpha_v}})^{-1}.$
 
 ```{=latex}
 \pause
@@ -732,12 +641,11 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 
 - Penalized rank-one reconstruction:  
   $$
-  \min_{u,v}\;\|\pmb X-uv^\top\|_F^2+ \color{TitleRed} \mathcal P(u,v)
+  \min_{\pmb{u},\pmb{v}}\;\|\pmb X-\pmb{u}\pmb{v}^\top\|_F^2+ \color{TitleRed} \mathcal P(\pmb{u},\pmb{v})
   $$
 
-- Penalty [@twoway_huang]:  $\mathcal P(u,v;\alpha_u,\pmb\alpha_v) = u^\top(\alpha_u\pmb\Omega_u)u\,\|v\|^2 + \|u\|^2\,v^\top(\pmb\alpha_v\pmb\Omega_v)v + u^\top(\alpha_u\pmb\Omega_u)u\; v^\top(\pmb\alpha_v\pmb\Omega_v)v.$
+- Penalty [@twoway_huang]: $\mathcal P(\pmb{u},\pmb{v};\alpha_{\pmb{u}},\pmb{\alpha}_{\pmb{v}}) = \pmb{u}^\top(\alpha_{\pmb{u}}\pmb\Omega_{\pmb{u}})\pmb{u}\,\|\pmb{v}\|^2 + \|\pmb{u}\|^2\,\pmb{v}^\top\pmb\Omega_{\pmb{\alpha_v}}\pmb{v} + \pmb{u}^\top(\alpha_{\pmb{u}}\pmb\Omega_{\pmb{u}})\pmb{u}\;\pmb{v}^\top\pmb\Omega_{\pmb{\alpha_v}}\pmb{v}.$
 
-- Multivariate $v$:  $\pmb\Omega_v=\operatorname{diag}(\Omega_1,\ldots,\Omega_p).$
 
 
 
@@ -753,13 +661,13 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 \pause
 ```
 
-- Data matrix $\pmb{X}$: seek $u, v$ solving:
+- Data matrix $\pmb{X}$: seek $\pmb{u}, \pmb{v}$ solving:
   $$
-  \min_{u,v} \|\pmb X - uv^\top\|_F^2 + 
-  \sum_j^J \mathcal P_j^{[\theta]}(u,v)
+  \min_{\pmb{u},\pmb{v}} \|\pmb X - \pmb{u}\pmb{v}^\top\|_F^2 + 
+  \sum_{\ell}^L \mathcal P_{\ell}^{[\theta]}(\pmb{u},\pmb{v})
   $$
-- $J$ is the number of penalty components, and $\theta$ is the vector of all tuning parameters.
-- The composite penalty $\sum_{j=1}^J \mathcal{P}_j^{(\theta)}(u,v)$ lets us mix regularizers, e.g., \textcolor{TitleRed}{smoothness} with $\color{TitleRed}{\theta=(\alpha_u,\boldsymbol{\alpha}_v)}$ and \textcolor{TitleBlue}{sparsity} with $\textcolor{TitleBlue}{\theta=(\gamma_u,\boldsymbol{\gamma}_v)}$ (controlling sparsity), and can include other structures as needed.
+- $L$ is the number of penalty components, and $\theta$ is the vector of all tuning parameters.
+- The composite penalty $\sum_{\ell=1}^L \mathcal P_{\ell}^{[\theta]}(\pmb{u},\pmb{v})$ lets us mix regularizers, e.g., \textcolor{TitleRed}{smoothness} with $\color{TitleRed}{\theta=(\alpha_{\pmb{u}},\pmb{\alpha}_{\pmb{v}})}$ and \textcolor{TitleBlue}{sparsity} with $\textcolor{TitleBlue}{\theta=(\gamma_{\pmb{u}},\pmb{\gamma}_{\pmb{v}})}$ (controlling sparsity), and can include other structures as needed.
  
 
 ## Sequential Power Algorithm
@@ -769,14 +677,14 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 \label{algo:SSPower}
 \small
 \begin{enumerate}
-  \item {Initialization:} Rank-one SVD of $\pmb X$: $\pmb X \approx s\,u^{(0)} {v^{(0)}}^\top$; set $u \leftarrow s\,u^{(0)}$, $v \leftarrow v^{(0)}$.
+  \item {Initialization:} Rank-one SVD of $\pmb X$.
   \item {Repeat until convergence:}
     \begin{enumerate}
-      \item $u \leftarrow \textcolor{TitleRed}{\pmb S_u^{[\alpha_u]}}\; \textcolor{TitleBlue}{\pmb h_u^{[\gamma_u]}} (\pmb X\,v)$
-      \item $v \leftarrow \textcolor{TitleRed}{\pmb S_v^{[\pmb{\alpha}_v]}}\; \textcolor{TitleBlue}{\pmb h_v^{[\pmb{\gamma}_v]}}(\pmb X^\top u)$
-      \item $v \leftarrow v/\lVert v\rVert$
+      \item $\pmb{u} \leftarrow \textcolor{TitleRed}{\pmb S_{\pmb{u}}^{[\alpha_{\pmb{u}}]}}\; \textcolor{TitleBlue}{\pmb h_{\pmb{u}}^{[\gamma_{\pmb{u}}]}} (\pmb X\,\pmb{v})$
+      \item $\pmb{v} \leftarrow \textcolor{TitleRed}{\pmb S_{\pmb{v}}^{[\pmb{\alpha}_{\pmb{v}}]}}\; \textcolor{TitleBlue}{\pmb h_{\pmb{v}}^{[\pmb{\gamma}_{\pmb{v}}]}}(\pmb X^\top \pmb{u})$
+      \item $\pmb{v} \leftarrow \pmb{v}/\lVert \pmb{v}\rVert$
     \end{enumerate}
-  \item $\pmb X \leftarrow \pmb X - \sigma\,u\,v^\top$ to extract the next component.
+  \item $\pmb X \leftarrow \pmb X - \sigma\,\pmb{u}\,\pmb{v}^\top$ to extract the next component.
 \end{enumerate}
 \end{block}
 ```
@@ -787,8 +695,8 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 ## Selection of Regularization Parameters
 
 - Four sets of tuning parameters:  
-  - $\color{TitleRed}{\alpha_u}$: smoothness of $u$,  $\color{TitleBlue}\gamma_u$: sparsity of $u$  
-  - $\color{TitleRed}{\pmb{\alpha}_v}$: smoothness of $v$,  $\color{TitleBlue}\pmb{\gamma}_v$: sparsity of $v$  
+  - $\color{TitleRed}{\alpha_{\pmb{u}}}$: smoothness of $\pmb{u}$,  $\color{TitleBlue}\gamma_{\pmb{u}}$: sparsity of $\pmb{u}$  
+  - $\color{TitleRed}{\pmb{\alpha}_{\pmb{v}}}$: smoothness of $\pmb{v}$,  $\color{TitleBlue}\pmb{\gamma}_{\pmb{v}}$: sparsity of $\pmb{v}$  
 
 - **Challenge:** Ordering of tuning (smoothness vs. sparsity) affects convergence and solutions.  
 
@@ -798,10 +706,10 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 
 - **Strategy: Conditional tuning**  
   1. Initialize all penalties at 0.  
-  2. Tune $\gamma_u$ via $K$-fold CV.  
+  2. Tune $\gamma_{\pmb{u}}$ via $K$-fold CV.  
   3. Sequentially tune $\gamma_{v,i}$ using \hyperlink{algo:SSPower}{Algorithm:Two-way Smooth + Sparse MFPCA}.
-  4. With sparsity fixed, tune $\alpha_u$ by GCV.  
-  5. Tune $\alpha_{v,i}$ using two-way GCV.  
+  4. With sparsity fixed, tune $\alpha_{\pmb{u}}$ by GCV.
+  5. Tune $\alpha_{{v},i}$ using two-way GCV.
   6. Iterate steps 2–5 until stable.  
 
 - This alternating scheme **isolates sparsity vs. smoothness** while ensuring accuracy + interpretability.  
@@ -891,7 +799,7 @@ $$
 \tilde{X}_j(t_i)=\hat{w}_j^{1/2}X_j(t_i).
 $$
 
-- **Penalties used:** smoothness + sparsity on loadings $v$; sparsity on scores $u$.
+- **Penalties used:** smoothness + sparsity on loadings $\pmb{v}$; sparsity on scores $\pmb{u}$.
 
 ## Results: Functional PCs (SVD vs ReMFPCA)
 
@@ -928,7 +836,7 @@ $$
 
 - **Methodology**  
   - Penalized SVD with roughness + $\ell_1$ penalties.  
-  - Two-way regularization: smoothness & sparsity on both **scores ($u$)** and **loadings ($v$)**.  
+  - Two-way regularization: smoothness & sparsity on both **scores ($\pmb{u}$)** and **loadings ($\pmb{v}$)**.  
   - Efficient parameter tuning: **conditional GCV** & **K-fold CV** (with 1-SE rule).  
 
 \vspace{1em}
