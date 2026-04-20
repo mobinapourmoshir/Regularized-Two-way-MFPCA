@@ -62,7 +62,7 @@ header-includes:
     }
             
     \AtBeginDocument{%
-      \author[Mobina Pourmoshir]{Mobina Pourmoshir, Dr. Mehdi Maadooliat\\\small\texttt{mobina.pourmoshir@marquette.edu}}%
+      \author[Mobina Pourmoshir]{Mobina Pourmoshir \\ Dr. Mehdi Maadooliat \\ [0.5em] \small\texttt{mobina.pourmoshir@marquette.edu}}%
     }
     \setbeamertemplate{section page}[none]
     \AtBeginSection[]{}
@@ -79,7 +79,7 @@ header-includes:
     \setbeamercolor{author in head/foot}{bg=MUgold, fg=black}
     \setbeamercolor{title in head/foot}{bg=MUgold,  fg=black}
     \setbeamercolor{date in head/foot}{bg=MUgold,   fg=black}
-    \titlegraphic{\vspace{-2cm}\includegraphics[width=0.18\textwidth]{images/MU.png}}
+    \titlegraphic{\vspace{-12mm}\includegraphics[width=0.18\textwidth]{images/MU.png}}
     \setbeamertemplate{footline}{%
       \leavevmode
       \hbox{%
@@ -126,7 +126,7 @@ header-includes:
     \setbeamertemplate{footline}{%
       \leavevmode%
       \hbox{%
-        \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}Pourmoshir, Dr. Maadooliat\end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}Pourmoshir, Maadooliat\end{beamercolorbox}%
         \begin{beamercolorbox}[wd=.34\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}Regularized Multivariate Two-way FPCA\end{beamercolorbox}%
         \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex}\end{beamercolorbox}%
       }%
@@ -204,13 +204,14 @@ header-includes:
 ## Functional Principal Component Analysis {auto-animate="true"}
 
 - **Extensions of FPCA:**
+\vspace{1em}
   - \textcolor{TitleRed}{Smoothed FPCA}: Adds roughness penalties [@silverman1996smoothed; @huang2008functional].
   - \textcolor{TitleBlue}{Sparse FPCA}: Enforces sparsity for interpretability [@huang2008sparse; @SparsePCA2020].
   - Multivariate FPCA (MFPCA) [@silverman1996smoothed; @Happ_2018].
   - Regularized MFPCA: Penalties improve estimation & interpretability [@haghbin2023regMFPCA].
   - **Two-way functional data:** consist of a data matrix whose row and column domains are both structured. Huang [@twoway_huang] applied regularization to both left and right singular vectors in SVD.
   
-\vspace{1em}
+\vspace{2em}
 
 - **Impact:** More adaptable, robust, and applicable across different problems.
 
@@ -424,7 +425,7 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
         \begin{block}{Algorithm: Regularized Power Iteration for Smooth MFPCA}
 \small
 \begin{enumerate}
-  \item Initialize $v$.
+  \item Initialize $\pmb{v}$.
   \item Repeat until convergence:
     \begin{enumerate}
       \item $\pmb{u} \leftarrow \pmb{X}\pmb{v}$
@@ -435,12 +436,12 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 \end{enumerate}
 \end{block}
 ```
-- The smoothing operator is $\color{TitleRed}{\pmb{S}(\pmb{\alpha}) = \big(I + \pmb{\Omega}_{\pmb{\alpha}}\big)^{-1}} \color{black}\in \mathbb{R}^{M \times M}$. 
+- The smoothing operator is $\color{TitleRed}{\pmb{S}(\pmb{\alpha}) = \big(\pmb{I} + \pmb{\Omega}_{\pmb{\alpha}}\big)^{-1}} \color{black}\in \mathbb{R}^{M \times M}$. 
 - The smoothing parameter $\pmb{\alpha}$ is selected via generalized cross-validation (GCV), defined as
     ```{=latex}
   \vspace{-1.5em}
 \begin{equation}\label{eq:MGCV one-way}
-	\textcolor{TitleRed}{\text{GCV}(\pmb{\alpha}) = \frac{1}{M} \frac{\Vert ({I} - \pmb{S}(\pmb{\alpha})) (\pmb{X}^T \pmb{u}) \Vert^2}{\left(1 - \frac{1}{M} \text{tr} \{\pmb{S}(\pmb{\alpha})\}\right)^2}}.
+	\textcolor{TitleRed}{\text{GCV}(\pmb{\alpha}) = \frac{1}{M} \frac{\Vert (\pmb{I} - \pmb{S}(\pmb{\alpha})) (\pmb{X}^T \pmb{u}) \Vert^2}{\left(1 - \frac{1}{M} \text{tr} \{\pmb{S}(\pmb{\alpha})\}\right)^2}}.
 \end{equation}
     ```
 :::
@@ -591,23 +592,20 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
   - Results may be rough or overly dense along the unpenalized axis.  
 
 ```{=latex}
-  \only<1>{
+\only<1>{
+  \centering
+  \hspace{0.5em}
+  \begin{minipage}{0.53\linewidth}
     \centering
-    % Left image (moved up a bit)
-    \begin{minipage}{0.55\linewidth}
-      \centering
-      \vspace{-2.5em} % <-- adjust this value
-      \includegraphics[width=\linewidth]{images/two-way eg.png}
-    \end{minipage}
-    \hspace{1em}
-    % Right image (unchanged)
-    \begin{minipage}{0.40\linewidth}
-      \centering
-      \includegraphics[height=0.6\textheight]{images/NDVI.png}
-    \end{minipage}
-  }
-
-
+    \vspace{-2.5em}
+    \includegraphics[width=\linewidth]{images/two-way eg.png}
+  \end{minipage}
+  \hspace{0.2em}
+  \begin{minipage}{0.40\linewidth}
+    \centering
+    \includegraphics[height=0.6\textheight]{images/NDVI.png}
+  \end{minipage}
+}
 ```
 
 
@@ -617,7 +615,7 @@ where $u \in \mathbb{R}^n$ denotes the scores, $v \in \mathbb{R}^m$ the loading 
 
 
 - **Two-way FPCA [@twoway_huang]:**  
-  - Introduced **smoothness penalties** on both scores and loadings.  
+  - Introduced **smoothness penalties** on both directions.  
   - Produces coherent, interpretable *component surfaces* instead of jagged approximations.  
 
 - **Our contribution:**  
