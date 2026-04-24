@@ -21,71 +21,36 @@ citeproc: true
 
 # Background
 
-- Data centers use substantial energy for computing and cooling.
+- Data centers consume large amounts of energy for both computing and cooling, making energy efficiency a major challenge.
 
-- Operators must balance workload demand, electricity cost, and carbon impact.
+- Operators must balance workload demand, electricity cost, cooling needs, and carbon emissions while maintaining reliable performance.
 
-- This study combines descriptive analytics and AI to support efficient and cost-aware data center planning.
+- This study combines descriptive analytics and AI modeling to support efficient, cost-aware, and sustainable data center planning.
 
 
 # Dataset Overview
 
-- The dataset includes hourly workload, electricity price, server parameters, and ADS cooling-system states.
+- The dataset includes hourly workload demand, electricity prices, server parameters, and ADS cooling-system states.
 
-- These data support integrated analysis of:
+- These variables support integrated analysis of both computing demand and cooling-system performance under changing operating conditions.
+
+- The dataset supports analysis of:
   - power demand
   - operating cost
   - carbon emissions
   - cooling performance
 
+- It also provides the foundation for AI-based modeling of ADS efficiency and cooling capacity.
 
 # Methodology
 
-We use a three-step framework.
-
-## Step 1: Operational Analytics
-
-Let
-
-$W_t = W_t^(int) + W_t^(batch)$
-
-denote hourly total workload.
-
-We analyze:
-
-- workload demand
-- electricity price
-- server requirement
-- IT and cooling power
-- total facility power
-- hourly electricity cost
-- hourly carbon emissions
-
-
-## Step 2: Cooling-System Modeling
-
-The adsorption cooling system (ADS) is modeled using:
-
-- inputs:
-  - generator temperature $T^(gen)$
-  - condenser temperature $T^(cond)$
-
-- outputs:
-  - coefficient of performance $COP$
-  - cooling capacity $q^(cap)$
-
-
-## Step 3: AI Surrogate Model
-
-We train a Random Forest multi-output model to approximate the ADS operating map:
-
-$$
-(\hat{COP}, \hat{q}^{cap})= f(T^{gen}, T^{cond})
-$$
 
 ```{=typst}
-#v(-2.2em)
+#align(center,
+  image("images/Method.png", width: 100%)
+)
 ```
+
 
 
 # Key Equations
@@ -93,24 +58,11 @@ $$
 $$
 $$
 
-
-$$
-\text{Electricity Cost} = \text{Energy Consumption} \times \text{Electricity Price}
-$$
-
-$$
-$$
-
-$$
-\text{Carbon Emissions} = \text{Energy Consumption} \times \text{Carbon Intensity}
-$$
-
-$$
-$$
-
-$$
-R^2 = 1 - \frac{\sum_i (y_i - \hat{y}_i)^2}{\sum_i (y_i - \bar{y})^2}
-$$
+```{=typst}
+#align(center,
+  image("images/formulas.png", width: 90%)
+)
+```
 
 
 # Workload and Electricity Price
